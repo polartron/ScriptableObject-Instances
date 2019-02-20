@@ -13,6 +13,7 @@ https://www.youtube.com/watch?v=raQ3iHhE_Kk
 > "com.fasteraune.scriptableobjectvariables": "file:com.fasteraune.scriptableobjectvariables"
 
 ## Usage
+![Example](https://i.imgur.com/h6vTlFo.png)
 
 See the Example folder
 
