@@ -7,7 +7,7 @@ https://www.youtube.com/watch?v=raQ3iHhE_Kk
 
 ## Installation
 
-### Manual Installalation
+### Manual Installation
 - Download the repository and put the files in a folder named **com.fasteraune.scriptableobjectvariables** in your **Packages** folder located next to your **Assets** folder
 - Add the following to your **manifest.json** file in your **Packages** folder 
 > "com.fasteraune.scriptableobjectvariables": "file:com.fasteraune.scriptableobjectvariables"
