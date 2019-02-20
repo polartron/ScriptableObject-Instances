@@ -12,26 +12,42 @@ https://www.youtube.com/watch?v=raQ3iHhE_Kk
 - Add the following to your **manifest.json** file in your **Packages** folder 
 > "com.fasteraune.scriptableobjectvariables": "file:com.fasteraune.scriptableobjectvariables"
 
-### Package Manager (2013.3.x +)
-There is an experimental feature allowing you to reference the project by an url to the repository. Add the following to your **manifest.json** file in your **Packages** folder 
-> "com.fasteraune.scriptableobjectvariables": "https://github.com/polartron/ScriptableObject-Instanced-Variables.git"
-
-**Optional**
-
-Add the following package to see and manage versions of the package https://github.com/mob-sakai/UpmGitExtension
-
 ## Usage
 
 See the Example folder
 
-## Adding Types
+## Script Generation Example
 
-The package features a code generator that, based on an array of types, generates the scripts needed for your variables.
+```
+using System;
+using System.IO;
+using Fasteraune.Variables.Editor;
+using UnityEditor;
+using UnityEngine;
 
-To add your own type. Edit **ReferenceScriptGenerator.cs** found in **Variables/Editor** and add an entry to the types array. 
-![types](https://i.imgur.com/WgqWsZH.png)
+public class VariableGenerator
+{
+    [MenuItem("Assets/Variables/Generate")]
+    static void Generate()
+    {
+        Type[] types =
+        {
+            typeof(float),
+            typeof(int),
+            typeof(bool),
+            typeof(string),
+            
+            typeof(Transform),
+            typeof(Vector3),
+            typeof(GameObject),
+            typeof(AudioSource),
+            typeof(AudioClip),
+            typeof(Rigidbody)
+        };
 
-If you are adding your own type from your own project, add a reference to your project assembly in the **Fasteraune.ScriptableObjectVariables.asmdef** file located in the root of the package.
-
-To generate the scripts, use this menu option.
-> Assets->Generate ScriptableObject Variable Scripts
+        string path = Path.Combine(Application.dataPath, "Scripts/Variables/Generated/");
+        
+        ScriptGenerator.GenerateScripts(types, path);
+    }
+}
+```
