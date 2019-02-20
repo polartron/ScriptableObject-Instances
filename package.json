@@ -1,0 +1,8 @@
+{
+  "name": "com.fasteraune.scriptableobjectvariables",
+  "displayName": "ScriptableObject Variables",
+  "version": "0.0.4",
+  "unity": "2018.3",
+  "description": "Based on the Unite Austin 2017 talk by Ryan Hipple. This version allows you to have instanced variables as well.",
+  "dependencies": { }
+}
