@@ -19,6 +19,8 @@ namespace Fasteraune.Variables.Editor
         private GUIStyle popupStyle;
         private GUIStyle toggleButtonStyle;
 
+        private Texture2D backgroundTexture = new Texture2D(0, 0);
+
         /// https://answers.unity.com/questions/929293/get-field-type-of-serializedproperty.html
         public static Type GetSerializedPropertyType(SerializedProperty property)
         {
@@ -190,11 +192,15 @@ namespace Fasteraune.Variables.Editor
                     label.text += " (Instanced)";
                     break;
             }
-
+            
+            Rect original = new Rect(position);
             label = EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, label);
+            
+            //EditorGUI.HelpBox(position, "", MessageType.Info);
+            GUI.Label(original, backgroundTexture, EditorStyles.helpBox);
             position.size = new Vector2(position.size.x, EditorGUIUtility.singleLineHeight);
-
+            
             EditorGUI.BeginChangeCheck();
 
             // Calculate rect for configuration button
@@ -296,6 +302,19 @@ namespace Fasteraune.Variables.Editor
                     break;
                 }
             }
+            
+            var clampProperty = property.FindPropertyRelative("Clamp");
+
+            var t = GetTargetProperty(property);
+            if (clampProperty != null && t != null)
+            {
+                EditorGUI.indentLevel++;
+                float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                Rect clampRect = new Rect(original);
+                clampRect.y += EditorGUI.GetPropertyHeight(t);
+                EditorGUI.PropertyField(clampRect, clampProperty, true);
+                EditorGUI.indentLevel--;
+            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -322,29 +341,21 @@ namespace Fasteraune.Variables.Editor
             EditorGUI.PropertyField(valueRect, property, label, true);
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        private SerializedProperty GetTargetProperty(SerializedProperty property)
         {
             var referenceType = property.FindPropertyRelative("Type");
             var constantValue = property.FindPropertyRelative("ConstantValue");
             var variableProperty = property.FindPropertyRelative("Variable");
-
-            SerializedProperty heightProperty = null;
-
+            
             var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
 
             switch (referenceTypeEnum)
             {
                 case ReferenceType.ConstantValue:
-                    heightProperty = constantValue;
-                    break;
+                    return constantValue;
 
                 case ReferenceType.SharedReference:
-                case ReferenceType.InstancedReference:
-                    if (!Application.isPlaying)
-                    {
-                        break;
-                    }
-                    
+                case ReferenceType.InstancedReference:                    
                     var variable = variableProperty.objectReferenceValue as Variable;
 
                     if (variable == null)
@@ -353,17 +364,38 @@ namespace Fasteraune.Variables.Editor
                     }
 
                     var wrapper = variable.GetRuntimeValueWrapper();
-                    heightProperty = wrapper.FindProperty("ProxyValue");
-                    break;
+                    return wrapper.FindProperty("ProxyValue");
             }
+
+            return null;
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var clampProperty = property.FindPropertyRelative("Clamp");
+
+            SerializedProperty heightProperty = GetTargetProperty(property);
 
             if (heightProperty == null || !heightProperty.hasVisibleChildren ||
                 heightProperty.hasVisibleChildren && !heightProperty.isExpanded)
             {
-                return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                
+                if (clampProperty != null)
+                {
+                    height += EditorGUI.GetPropertyHeight(clampProperty);
+                }
+                
+                return height;
             }
 
-            return EditorGUI.GetPropertyHeight(heightProperty);
+            if (clampProperty != null)
+            {
+                return EditorGUI.GetPropertyHeight(heightProperty) +
+                    EditorGUI.GetPropertyHeight(clampProperty) + EditorGUIUtility.standardVerticalSpacing;
+            }
+
+            return EditorGUI.GetPropertyHeight(heightProperty) + EditorGUIUtility.standardVerticalSpacing;
         }
     }
 }

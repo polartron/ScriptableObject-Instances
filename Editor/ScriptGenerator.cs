@@ -84,6 +84,106 @@ class #NAME#VariableProxy : ScriptableObject
 
 #endif";
 
+        private static string clampedTemplate =
+            @"using System;
+using Fasteraune.Variables;
+
+[Serializable]
+public class #NAME#ClampedReference : BaseReference<#TYPE#, #NAME#Variable>
+{
+    [Serializable]
+    public class ClampData
+    {
+        public #NAME#Reference Min = new #NAME#Reference();
+        public #NAME#Reference Max = new #NAME#Reference();
+    }
+    
+    public ClampData Clamp = new ClampData();
+    
+    public #NAME#ClampedReference(#TYPE# Value) : base(Value)
+    {
+    }
+
+    public #NAME#ClampedReference()
+    {
+    }
+
+    public override #TYPE# Value
+    {
+        get
+        {
+            #TYPE# value = base.Value;
+            #TYPE# maxValue = Clamp.Max.Value;
+                    
+            if (value.CompareTo(maxValue) > 0)
+            {
+                base.Value = maxValue;
+                return maxValue;
+            }
+            
+            #TYPE# minValue = Clamp.Min.Value;
+                 
+            if (value.CompareTo(minValue) < 0)
+            {
+                base.Value = minValue;
+                return minValue;
+            }
+
+            return value;
+        }
+        set
+        {
+            #TYPE# maxValue = Clamp.Max.Value;
+                    
+            if (value.CompareTo(maxValue) > 0)
+            {
+                base.Value = maxValue;
+                return;
+            }
+            
+            #TYPE# minValue = Clamp.Min.Value;
+                 
+            if (value.CompareTo(minValue) < 0)
+            {
+                base.Value = minValue;
+                return;
+            }
+            
+            base.Value = value; 
+        }
+    }
+
+    private void OnMinValueChanged(#TYPE# minValue)
+    {
+        if (minValue.CompareTo(base.Value) < 0)
+        {
+            base.Value = minValue;
+        }
+    }
+    
+    private void OnMaxValueChanged(#TYPE# maxValue)
+    {
+        if (maxValue.CompareTo(base.Value) > 0)
+        {
+            base.Value = maxValue;
+        }
+    }
+
+    public override void AddListener(Action<#TYPE#> listener)
+    {
+        Clamp.Min.AddListener(OnMinValueChanged);
+        Clamp.Max.AddListener(OnMaxValueChanged);
+        base.AddListener(listener);
+    }
+    
+    public override void RemoveListener(Action<#TYPE#> listener)
+    {
+        Clamp.Min.RemoveListener(OnMinValueChanged);
+        Clamp.Max.RemoveListener(OnMaxValueChanged);
+        base.RemoveListener(listener);
+    }
+}";
+
         private static void CreateScriptFile(string content, string path, string typeName, string name,
             string fileNamePostfix)
         {
@@ -123,6 +223,11 @@ class #NAME#VariableProxy : ScriptableObject
                 CreateScriptFile(variableTemplate, path, typeName, name, "Variable.cs");
                 CreateScriptFile(referenceTemplate, path, typeName, name, "Reference.cs");
                 CreateScriptFile(proxyTemplate, path, typeName, name, "VariableProxy.cs");
+
+                if (typeof(IComparable).IsAssignableFrom(generateType))
+                {
+                    CreateScriptFile(clampedTemplate, path, typeName, name, "ClampedReference.cs");
+                }
             }
 
             AssetDatabase.Refresh();

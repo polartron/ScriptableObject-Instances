@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
-    Type: 2
+    Type: 0
     ConstantValue:
       PlayerColor: {r: 1, g: 1, b: 1, a: 1}
       RegenerationRate: 1
@@ -58,11 +58,32 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 56850c1a9fed9c4419d7e2c419667568, type: 2}
     Connection: {fileID: 114799966914682562}
-  MaxHealth:
-    Type: 1
-    ConstantValue: 0
-    Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
-    Connection: {fileID: 0}
+    Clamp:
+      Min:
+        Type: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+        Connection: {fileID: 114799966914682562}
+      Max:
+        Type: 2
+        ConstantValue: 100
+        Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
+        Connection: {fileID: 114799966914682562}
+  Expression:
+    Expression: a + b
+    Variables:
+    - Name: a
+      Reference:
+        Type: 2
+        ConstantValue: 10
+        Variable: {fileID: 11400000, guid: 56850c1a9fed9c4419d7e2c419667568, type: 2}
+        Connection: {fileID: 114799966914682562}
+    - Name: b
+      Reference:
+        Type: 0
+        ConstantValue: 20
+        Variable: {fileID: 0}
+        Connection: {fileID: 0}
   Connection: {fileID: 114799966914682562}
   StatusPrefab: {fileID: 1856336477838808, guid: 0328d6426112c524a91b3fa61ed65f64,
     type: 3}

@@ -5,17 +5,23 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Serializable]
-    public class PlayerData
+    public class PlayerData : IComparable
     {
         public Color PlayerColor = Color.white;
         public float RegenerationRate = 1f;
         public int Experience = 0;
         public int Level = 0;
+        
+        public int CompareTo(object obj)
+        {
+            PlayerData data = obj as PlayerData;
+            return Level - data.Level;
+        }
     }
 
     [SerializeField] private PlayerDataReference playerData;
-    [SerializeField] private FloatReference Health;
-    [SerializeField] private FloatReference MaxHealth;
+    [SerializeField] private ClampedFloatReference Health;
+    [SerializeField] private ExpressionFloatReference Expression;
 
     public InstancedVariableOwner Connection;
     public GameObject StatusPrefab;
@@ -44,10 +50,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Health < MaxHealth)
-        {
-            float regenRate = playerData.Value.RegenerationRate;
-            Health.Value = Mathf.Clamp(Health + regenRate, 0f, MaxHealth);
-        }
+        float regenRate = playerData.Value.RegenerationRate;
+        Health.Value = Health.Value + regenRate;
+        float a = Expression.Value;
     }
 }

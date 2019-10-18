@@ -54,7 +54,7 @@ namespace Fasteraune.Variables
             return reference.Value;
         }
 
-        public TVariableType Value
+        public virtual TVariableType Value
         {
             get
             {
@@ -62,11 +62,6 @@ namespace Fasteraune.Variables
                 {
                     case ReferenceType.ConstantValue:
                     {
-                        if (ConstantValue == null)
-                        {
-                            ConstantValue = default(TVariableType);
-                        }
-
                         return ConstantValue;
                     }
 
@@ -87,7 +82,7 @@ namespace Fasteraune.Variables
                             return default(TVariableType);
                         }
 
-                        var connection = Connection.Parent ?? Connection;
+                        var connection = Connection.Parent ? Connection.Parent : Connection;
 
                         return Variable.GetOrCreateInstancedVariable(connection).Value;
                     }
@@ -143,7 +138,7 @@ namespace Fasteraune.Variables
             }
         }
 
-        public void AddListener(Action<TVariableType> listener)
+        public virtual void AddListener(Action<TVariableType> listener)
         {
             switch (Type)
             {
@@ -180,7 +175,7 @@ namespace Fasteraune.Variables
             }
         }
 
-        public void RemoveListener(Action<TVariableType> listener)
+        public virtual void RemoveListener(Action<TVariableType> listener)
         {
             switch (Type)
             {
