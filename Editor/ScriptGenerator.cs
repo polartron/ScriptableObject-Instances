@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Microsoft.CSharp;
@@ -184,19 +185,38 @@ public class #NAME#ClampedReference : BaseReference<#TYPE#, #NAME#Variable>
     }
 }";
 
-        private static void CreateScriptFile(string content, string path, string typeName, string name,
+        private static void CreateScriptFile(string template, string path, string typeName, string name,
+            string fileNamePostfix)
+        {
+            CreateScriptFile(new[] {template}, path, typeName, name, fileNamePostfix);
+        }
+        
+        private static void CreateScriptFile(IEnumerable<string> templates, string path, string typeName, string name,
             string fileNamePostfix)
         {
             using (var fs = File.Create(path + name + fileNamePostfix))
             {
-                content = content.Replace("#TYPE#", typeName);
-                content = content.Replace("#NAME#", name);
+                string finalContent = "";
 
-                var info = new UTF8Encoding(true).GetBytes(content);
+                foreach (var template in templates)
+                {
+                    string content = template.Replace("#TYPE#", typeName);
+                    content = content.Replace("#NAME#", name);
+
+                    finalContent += content;
+                }
+                
+
+                var info = new UTF8Encoding(true).GetBytes(finalContent);
                 fs.Write(info, 0, info.Length);
             }
         }
 
+        private class GenerateSettings
+        {
+            
+        }
+        
         public static void GenerateScripts(Type[] types, string path)
         {
             if (!Directory.Exists(path))
@@ -221,13 +241,17 @@ public class #NAME#ClampedReference : BaseReference<#TYPE#, #NAME#Variable>
                 var name = UppercaseFirst(fullTypeName);
 
                 CreateScriptFile(variableTemplate, path, typeName, name, "Variable.cs");
-                CreateScriptFile(referenceTemplate, path, typeName, name, "Reference.cs");
                 CreateScriptFile(proxyTemplate, path, typeName, name, "VariableProxy.cs");
+                
+                List<string> referenceTemplates = new List<string>();
+                referenceTemplates.Add(referenceTemplate);
 
                 if (typeof(IComparable).IsAssignableFrom(generateType))
                 {
-                    CreateScriptFile(clampedTemplate, path, typeName, name, "ClampedReference.cs");
+                    referenceTemplates.Add(clampedTemplate);
                 }
+                
+                CreateScriptFile(referenceTemplates, path, typeName, name, "Reference.cs");
             }
 
             AssetDatabase.Refresh();

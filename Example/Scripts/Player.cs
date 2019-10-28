@@ -18,11 +18,10 @@ public class Player : MonoBehaviour
             return Level - data.Level;
         }
     }
-
-    [SerializeField] private PlayerDataReference playerData;
+    
     [SerializeField] private ClampedFloatReference Health;
-    [SerializeField] private ExpressionFloatReference Expression;
-
+    [SerializeField] private ExpressionFloatReference HealthAdvanced;
+    
     public InstancedVariableOwner Connection;
     public GameObject StatusPrefab;
 
@@ -38,6 +37,8 @@ public class Player : MonoBehaviour
 
         //Set the parent
         statusPrefabInstance.GetComponent<InstancedVariableOwner>().Parent = Connection;
+        
+        Health.EnableCaching();
     }
 
     private void OnDestroy()
@@ -46,12 +47,12 @@ public class Player : MonoBehaviour
         {
             Destroy(statusPrefabInstance);
         }
+        
+        Health.Dispose();
     }
 
     private void Update()
     {
-        float regenRate = playerData.Value.RegenerationRate;
-        Health.Value = Health.Value + regenRate;
-        float a = Expression.Value;
+        Health.Value = Health.Value + 1f;
     }
 }

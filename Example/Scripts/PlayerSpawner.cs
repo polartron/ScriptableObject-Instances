@@ -6,6 +6,9 @@ public class PlayerSpawner : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Instantiate(PlayerPrefab);
+        for (int i = 0; i < 100; i++)
+        {
+            Instantiate(PlayerPrefab);
+        }
     }
 }
