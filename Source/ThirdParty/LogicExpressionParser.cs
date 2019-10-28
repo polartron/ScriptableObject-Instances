@@ -481,6 +481,12 @@ namespace B83.LogicExpressionParser
             m_NumberVal = tmp;
             m_BoolVal = null;
         }
+
+        public virtual void Set(INumberProvider provider)
+        {
+            m_NumberVal = provider;
+            m_BoolVal = null;
+        }
     }
 
     public class ExpressionVariable : ValueProvider

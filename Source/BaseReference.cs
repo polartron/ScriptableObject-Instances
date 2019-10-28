@@ -16,14 +16,13 @@ namespace Fasteraune.Variables
     }
 
     [Serializable]
-    public class BaseReference<TVariableType, TVariable> : BaseReference where TVariable : Variable<TVariableType>
+    public class BaseReference<TVariableType, TVariable> : BaseReference, IDisposable where TVariable : Variable<TVariableType>
     {
         public ReferenceType Type = ReferenceType.ConstantValue;
         public TVariableType ConstantValue;
         public TVariable Variable;
         public InstancedVariableOwner Connection;
         private event Action<TVariableType> OnConstantValueChanged;
-
         private Variable<TVariableType> instancedVariable;
 
         private Variable<TVariableType> InstancedVariable
@@ -32,13 +31,16 @@ namespace Fasteraune.Variables
             {
                 if (instancedVariable == null)
                 {
-                    var connection = Connection.Parent ?? Connection;
+                    var connection = Connection.Parent ? Connection.Parent : Connection;
                     instancedVariable = Variable.GetOrCreateInstancedVariable(connection);
                 }
 
                 return instancedVariable;
             }
         }
+
+        private bool caching = false;
+        private TVariableType cachedVariable;
 
         public BaseReference()
         {
@@ -67,6 +69,11 @@ namespace Fasteraune.Variables
 
                     case ReferenceType.SharedReference:
                     {
+                        if (caching)
+                        {
+                            return cachedVariable;
+                        }
+                        
                         if (VariableReferenceMissing())
                         {
                             return default(TVariableType);
@@ -81,10 +88,13 @@ namespace Fasteraune.Variables
                         {
                             return default(TVariableType);
                         }
+                        
+                        if (caching)
+                        {
+                            return cachedVariable;
+                        }
 
-                        var connection = Connection.Parent ? Connection.Parent : Connection;
-
-                        return Variable.GetOrCreateInstancedVariable(connection).Value;
+                        return InstancedVariable.Value;
                     }
 
                     default:
@@ -100,10 +110,7 @@ namespace Fasteraune.Variables
                     {
                         ConstantValue = value;
 
-                        if (OnConstantValueChanged != null)
-                        {
-                            OnConstantValueChanged.Invoke(value);
-                        }
+                        OnConstantValueChanged?.Invoke(value);
 
                         break;
                     }
@@ -232,6 +239,80 @@ namespace Fasteraune.Variables
             }
 
             return false;
+        }
+
+        public void EnableCaching()
+        {
+            switch (Type)
+            {
+                case ReferenceType.SharedReference:
+                {
+                    if (VariableReferenceMissing())
+                    {
+                        return;
+                    }
+                    
+                    Variable.OnValueChanged += VariableOnOnValueChanged;
+                    cachedVariable = Variable.Value;
+                    break;
+                }
+
+                case ReferenceType.InstancedReference:
+                {
+                    if (VariableReferenceMissing() || ConnectionReferenceMissing())
+                    {
+                        return;
+                    }
+
+                    InstancedVariable.OnValueChanged += VariableOnOnValueChanged;
+                    cachedVariable = InstancedVariable.Value;
+                    break;
+                }
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            caching = true;
+        }
+
+        private void VariableOnOnValueChanged(TVariableType value)
+        {
+            cachedVariable = value;
+        }
+
+        public void Dispose()
+        {
+            if (caching)
+            {
+                switch (Type)
+                {
+                    case ReferenceType.SharedReference:
+                    {
+                        if (VariableReferenceMissing())
+                        {
+                            return;
+                        }
+                        
+                        Variable.OnValueChanged -= VariableOnOnValueChanged;
+                        break;
+                    }
+    
+                    case ReferenceType.InstancedReference:
+                    {
+                        if (VariableReferenceMissing() || ConnectionReferenceMissing())
+                        {
+                            return;
+                        }
+    
+                        InstancedVariable.OnValueChanged -= VariableOnOnValueChanged;
+                        break;
+                    }
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }                
+            }
         }
     }
 }
