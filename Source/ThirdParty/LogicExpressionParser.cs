@@ -192,6 +192,11 @@ namespace B83.LogicExpressionParser
                 res *= inputs[i].GetNumber();
             }
 
+            byte a = 0;
+            byte b = 0;
+
+            var c = a / b;
+
             return res;
         }
 

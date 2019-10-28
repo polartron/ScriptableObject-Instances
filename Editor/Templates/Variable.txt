@@ -1,0 +1,43 @@
+using UnityEngine;
+using Fasteraune.Variables;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+[CreateAssetMenu(menuName = "Variables/#NAME#")]
+public class #NAME#Variable : Variable<#TYPE#>
+{
+#if UNITY_EDITOR
+
+    private #NAME#VariableProxy cachedProxy;
+
+    public override SerializedObject GetRuntimeValueWrapper()
+    {
+        if (cachedProxy == null)
+        {
+            cachedProxy = CreateInstance(typeof(#NAME#VariableProxy)) as #NAME#VariableProxy;
+        }
+        
+        cachedProxy.ProxyValue = Value;
+        return new SerializedObject(cachedProxy);
+    }
+    
+    public override SerializedObject GetInitialValueWrapper()
+    {
+        if (cachedProxy == null)
+        {
+            cachedProxy = CreateInstance(typeof(#NAME#VariableProxy)) as #NAME#VariableProxy;
+        }
+        
+        cachedProxy.ProxyValue = InitialValue;
+        return new SerializedObject(cachedProxy);
+    }
+
+    public override void ApplyModifiedValue(SerializedObject serializedObject)
+    {
+        #NAME#VariableProxy proxy = serializedObject.targetObject as #NAME#VariableProxy;
+        RuntimeValue = proxy.ProxyValue;
+    }
+    
+#endif
+}

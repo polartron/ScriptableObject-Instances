@@ -1,0 +1,11 @@
+using UnityEngine;
+using Fasteraune.Variables;
+
+#if UNITY_EDITOR
+
+class #NAME#VariableProxy : ScriptableObject
+{
+    public #TYPE# ProxyValue;
+}
+
+#endif
