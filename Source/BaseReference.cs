@@ -245,6 +245,9 @@ namespace Fasteraune.Variables
         {
             switch (Type)
             {
+                case ReferenceType.ConstantValue:
+                    return;
+                
                 case ReferenceType.SharedReference:
                 {
                     if (VariableReferenceMissing())
@@ -287,6 +290,9 @@ namespace Fasteraune.Variables
             {
                 switch (Type)
                 {
+                    case ReferenceType.ConstantValue:
+                        return;
+                    
                     case ReferenceType.SharedReference:
                     {
                         if (VariableReferenceMissing())

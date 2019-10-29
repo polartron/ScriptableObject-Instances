@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4977670446240040}
-  - component: {fileID: 114198851444590868}
   - component: {fileID: 114799966914682562}
+  - component: {fileID: 114198851444590868}
+  - component: {fileID: 708027941256256753}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114799966914682562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070171583294798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b6f2cb5418ee44ebc77ce1be1699a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 0}
 --- !u!114 &114198851444590868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +56,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9febcd134f0d63844bc438d42f019b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instancedVariableOwner: {fileID: 114799966914682562}
+  StatusPrefab: {fileID: 1856336477838808, guid: 0328d6426112c524a91b3fa61ed65f64,
+    type: 3}
+  StatusPrefabTransform:
+    Type: 1
+    ConstantValue: {fileID: 0}
+    Variable: {fileID: 11400000, guid: 21c3dbb1a6ddaa246a1db6ba88b3894b, type: 2}
+    Connection: {fileID: 0}
+--- !u!114 &708027941256256753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070171583294798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991b3657f18b4a347a46b61182f7c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Health:
@@ -60,46 +94,8 @@ MonoBehaviour:
       ConstantValue: 0
       Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
       Connection: {fileID: 114799966914682562}
-  HealthAdvanced:
-    Expression: clamp(hp + php, min, max)
-    Variables:
-    - Name: hp
-      Reference:
-        Type: 2
-        ConstantValue: 0
-        Variable: {fileID: 11400000, guid: 56850c1a9fed9c4419d7e2c419667568, type: 2}
-        Connection: {fileID: 114799966914682562}
-    - Name: php
-      Reference:
-        Type: 2
-        ConstantValue: 0
-        Variable: {fileID: 11400000, guid: ee63dedf33a18b44ea27c2232398ac10, type: 2}
-        Connection: {fileID: 114799966914682562}
-    - Name: min
-      Reference:
-        Type: 0
-        ConstantValue: 0
-        Variable: {fileID: 0}
-        Connection: {fileID: 0}
-    - Name: max
-      Reference:
-        Type: 2
-        ConstantValue: 0
-        Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
-        Connection: {fileID: 114799966914682562}
-  Connection: {fileID: 114799966914682562}
-  StatusPrefab: {fileID: 1856336477838808, guid: 0328d6426112c524a91b3fa61ed65f64,
-    type: 3}
---- !u!114 &114799966914682562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070171583294798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3b6f2cb5418ee44ebc77ce1be1699a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Parent: {fileID: 0}
+  PassiveRegeneration:
+    Type: 1
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: dd9324d06fe3a5749a5d95b4cc8c85bd, type: 2}
+    Connection: {fileID: 0}

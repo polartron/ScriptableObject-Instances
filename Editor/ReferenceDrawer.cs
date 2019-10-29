@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Fasteraune.Variables.Editor
     public class ReferenceDrawer : PropertyDrawer
     {
         private readonly string[] popupOptions =
-            {"Use Constant Value", "Use Shared Variable", "Use Instanced Variable"};
+            { "Use Constant Value", "Use Shared Variable", "Use Instanced Variable" };
 
         private readonly Dictionary<string, bool> toggles = new Dictionary<string, bool>();
 
@@ -192,15 +191,15 @@ namespace Fasteraune.Variables.Editor
                     label.text += " (Instanced)";
                     break;
             }
-            
-            Rect original = new Rect(position);
+
+            var original = new Rect(position);
             label = EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, label);
-            
+
             //EditorGUI.HelpBox(position, "", MessageType.Info);
             GUI.Label(original, backgroundTexture, EditorStyles.helpBox);
             position.size = new Vector2(position.size.x, EditorGUIUtility.singleLineHeight);
-            
+
             EditorGUI.BeginChangeCheck();
 
             // Calculate rect for configuration button
@@ -302,19 +301,6 @@ namespace Fasteraune.Variables.Editor
                     break;
                 }
             }
-            
-            var clampProperty = property.FindPropertyRelative("Clamp");
-
-            var t = GetTargetProperty(property);
-            if (clampProperty != null && t != null)
-            {
-                EditorGUI.indentLevel++;
-                float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                Rect clampRect = new Rect(original);
-                clampRect.y += EditorGUI.GetPropertyHeight(t);
-                EditorGUI.PropertyField(clampRect, clampProperty, true);
-                EditorGUI.indentLevel--;
-            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -346,7 +332,7 @@ namespace Fasteraune.Variables.Editor
             var referenceType = property.FindPropertyRelative("Type");
             var constantValue = property.FindPropertyRelative("ConstantValue");
             var variableProperty = property.FindPropertyRelative("Variable");
-            
+
             var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
 
             switch (referenceTypeEnum)
@@ -355,7 +341,7 @@ namespace Fasteraune.Variables.Editor
                     return constantValue;
 
                 case ReferenceType.SharedReference:
-                case ReferenceType.InstancedReference:                    
+                case ReferenceType.InstancedReference:
                     var variable = variableProperty.objectReferenceValue as Variable;
 
                     if (variable == null)
@@ -372,27 +358,12 @@ namespace Fasteraune.Variables.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            var clampProperty = property.FindPropertyRelative("Clamp");
-
-            SerializedProperty heightProperty = GetTargetProperty(property);
+            var heightProperty = GetTargetProperty(property);
 
             if (heightProperty == null || !heightProperty.hasVisibleChildren ||
                 heightProperty.hasVisibleChildren && !heightProperty.isExpanded)
             {
-                float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                
-                if (clampProperty != null)
-                {
-                    height += EditorGUI.GetPropertyHeight(clampProperty);
-                }
-                
-                return height;
-            }
-
-            if (clampProperty != null)
-            {
-                return EditorGUI.GetPropertyHeight(heightProperty) +
-                    EditorGUI.GetPropertyHeight(clampProperty) + EditorGUIUtility.standardVerticalSpacing;
+                return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             }
 
             return EditorGUI.GetPropertyHeight(heightProperty) + EditorGUIUtility.standardVerticalSpacing;

@@ -4,19 +4,19 @@ using Fasteraune.Variables;
 using UnityEditor;
 #endif
 
-namespace #NAMESPACE#
+namespace Generated.Variables
 {
-    [CreateAssetMenu(menuName = "Variables/#NAME#")]
-    public class #NAME#Variable : Variable<#TYPE#>
+    [CreateAssetMenu(menuName = "Variables/Transform")]
+    public class TransformVariable : Variable<UnityEngine.Transform>
     {
 #if UNITY_EDITOR
-        private #NAME#VariableProxy cachedProxy;
+        private TransformVariableProxy cachedProxy;
 
         public override SerializedObject GetRuntimeValueWrapper()
         {
             if (cachedProxy == null)
             {
-                cachedProxy = CreateInstance(typeof(#NAME#VariableProxy)) as #NAME#VariableProxy;
+                cachedProxy = CreateInstance(typeof(TransformVariableProxy)) as TransformVariableProxy;
             }
             
             cachedProxy.ProxyValue = Value;
@@ -27,7 +27,7 @@ namespace #NAMESPACE#
         {
             if (cachedProxy == null)
             {
-                cachedProxy = CreateInstance(typeof(#NAME#VariableProxy)) as #NAME#VariableProxy;
+                cachedProxy = CreateInstance(typeof(TransformVariableProxy)) as TransformVariableProxy;
             }
             
             cachedProxy.ProxyValue = InitialValue;
@@ -36,7 +36,7 @@ namespace #NAMESPACE#
 
         public override void ApplyModifiedValue(SerializedObject serializedObject)
         {
-            #NAME#VariableProxy proxy = serializedObject.targetObject as #NAME#VariableProxy;
+            TransformVariableProxy proxy = serializedObject.targetObject as TransformVariableProxy;
             Value = proxy.ProxyValue;
         }
 #endif

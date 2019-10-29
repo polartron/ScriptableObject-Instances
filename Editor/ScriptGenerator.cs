@@ -10,11 +10,13 @@ namespace Fasteraune.Variables.Editor
 {
     public class ScriptGenerator
     {
-        private static void CreateScriptFile(string content, string path, string typeName, string name,
+        private static void CreateScriptFile(string content, string path, string typeName, string nameSpace,
+            string name,
             string fileNamePostfix)
         {
             using (var fs = File.Create(path + name + fileNamePostfix))
             {
+                content = content.Replace("#NAMESPACE#", nameSpace);
                 content = content.Replace("#TYPE#", typeName);
                 content = content.Replace("#NAME#", name);
 
@@ -27,19 +29,19 @@ namespace Fasteraune.Variables.Editor
 
         private static string GetTemplate(string template)
         {
-            string path = TemplatePath + template + ".txt";
-            TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+            var path = TemplatePath + template + ".txt";
+            var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
 
             if (asset == null)
             {
                 Debug.LogError($"Template does not exist at {path}");
                 return null;
             }
-            
+
             return asset.text;
         }
-        
-        public static void GenerateScripts(Type[] types, string path)
+
+        public static void GenerateScripts(Type[] types, string path, string nameSpace = "Generated.Variables")
         {
             if (!Directory.Exists(path))
             {
@@ -62,27 +64,29 @@ namespace Fasteraune.Variables.Editor
                 var fullTypeName = GetTypeAliasName(generateType);
                 var name = UppercaseFirst(fullTypeName);
 
-                CreateScriptFile(GetTemplate("Variable"), path, typeName, name, "Variable.cs");
-                CreateScriptFile(GetTemplate("VariableProxy"), path, typeName, name, "VariableProxy.cs");
-                CreateScriptFile(GetTemplate("Reference"), path, typeName, name, "Reference.cs");
+                CreateScriptFile(GetTemplate("Variable"), path, typeName, nameSpace, name, "Variable.cs");
+                CreateScriptFile(GetTemplate("VariableProxy"), path, typeName, nameSpace, name, "VariableProxy.cs");
+                CreateScriptFile(GetTemplate("Reference"), path, typeName, nameSpace, name, "Reference.cs");
 
                 if (typeof(IComparable).IsAssignableFrom(generateType))
                 {
-                    CreateScriptFile(GetTemplate("ReferenceClamped"), path, typeName, name, "ReferenceClamped.cs");
+                    CreateScriptFile(GetTemplate("ReferenceClamped"), path, typeName, nameSpace, name,
+                        "ReferenceClamped.cs");
                 }
 
                 if (IsNumericType(generateType))
                 {
-                    CreateScriptFile(GetTemplate("ReferenceExpression"), path, typeName, name, "ReferenceExpression.cs");
+                    CreateScriptFile(GetTemplate("ReferenceExpression"), path, typeName, nameSpace, name,
+                        "ReferenceExpression.cs");
                 }
             }
 
             AssetDatabase.Refresh();
         }
-        
+
         //https://stackoverflow.com/questions/1749966/c-sharp-how-to-determine-whether-a-type-is-a-number/1750093#1750093
         public static bool IsNumericType(Type type)
-        {   
+        {
             switch (Type.GetTypeCode(type))
             {
                 case TypeCode.Byte:
@@ -122,13 +126,11 @@ namespace Fasteraune.Variables.Editor
 
         private static string UppercaseFirst(string s)
         {
-            // Check for empty string.
             if (string.IsNullOrEmpty(s))
             {
                 return string.Empty;
             }
 
-            // Return char and concat substring.
             return char.ToUpper(s[0]) + s.Substring(1);
         }
     }

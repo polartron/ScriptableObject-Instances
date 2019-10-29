@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using Generated.Variables;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class StatusText : MonoBehaviour
 {
-    [SerializeField] private PlayerDataReference playerData;
     [SerializeField] private FloatReference Health;
     [SerializeField] private FloatReference MaxHealth;
 
@@ -15,8 +15,6 @@ public class StatusText : MonoBehaviour
         Health.AddListener(OnHealthChanged);
 
         SetBar(Health, MaxHealth);
-
-        Portrait.color = playerData.Value.PlayerColor;
     }
 
     private void OnDestroy()

@@ -5,9 +5,9 @@ using Fasteraune.Variables;
 
 namespace Generated.Variables
 {
-    class FloatVariableProxy : ScriptableObject
+    class TransformVariableProxy : ScriptableObject
     {
-        public float ProxyValue;
+        public UnityEngine.Transform ProxyValue;
     }
 }
 #endif

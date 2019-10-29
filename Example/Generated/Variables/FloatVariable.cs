@@ -1,43 +1,44 @@
-using Fasteraune.Variables;
 using UnityEngine;
+using Fasteraune.Variables;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
-public class FloatVariable : Variable<float>
+namespace Generated.Variables
 {
+    [CreateAssetMenu(menuName = "Variables/Float")]
+    public class FloatVariable : Variable<float>
+    {
 #if UNITY_EDITOR
+        private FloatVariableProxy cachedProxy;
 
-    private FloatVariableProxy cachedProxy;
-
-    public override SerializedObject GetRuntimeValueWrapper()
-    {
-        if (cachedProxy == null)
+        public override SerializedObject GetRuntimeValueWrapper()
         {
-            cachedProxy = CreateInstance(typeof(FloatVariableProxy)) as FloatVariableProxy;
+            if (cachedProxy == null)
+            {
+                cachedProxy = CreateInstance(typeof(FloatVariableProxy)) as FloatVariableProxy;
+            }
+            
+            cachedProxy.ProxyValue = Value;
+            return new SerializedObject(cachedProxy);
+        }
+        
+        public override SerializedObject GetInitialValueWrapper()
+        {
+            if (cachedProxy == null)
+            {
+                cachedProxy = CreateInstance(typeof(FloatVariableProxy)) as FloatVariableProxy;
+            }
+            
+            cachedProxy.ProxyValue = InitialValue;
+            return new SerializedObject(cachedProxy);
         }
 
-        cachedProxy.ProxyValue = Value;
-        return new SerializedObject(cachedProxy);
-    }
-
-    public override SerializedObject GetInitialValueWrapper()
-    {
-        if (cachedProxy == null)
+        public override void ApplyModifiedValue(SerializedObject serializedObject)
         {
-            cachedProxy = CreateInstance(typeof(FloatVariableProxy)) as FloatVariableProxy;
+            FloatVariableProxy proxy = serializedObject.targetObject as FloatVariableProxy;
+            Value = proxy.ProxyValue;
         }
-
-        cachedProxy.ProxyValue = InitialValue;
-        return new SerializedObject(cachedProxy);
-    }
-
-    public override void ApplyModifiedValue(SerializedObject serializedObject)
-    {
-        var proxy = serializedObject.targetObject as FloatVariableProxy;
-        RuntimeValue = proxy.ProxyValue;
-    }
-
 #endif
+    }
 }

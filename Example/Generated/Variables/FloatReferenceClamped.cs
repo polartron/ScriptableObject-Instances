@@ -1,20 +1,20 @@
 using System;
 
-namespace #NAMESPACE#
+namespace Generated.Variables
 {
     [Serializable]
-    public class #NAME#ReferenceClamped : IDisposable
+    public class FloatReferenceClamped : IDisposable
     {
-        public #NAME#Reference Target = new #NAME#Reference();
-        public #NAME#Reference Min = new #NAME#Reference();
-        public #NAME#Reference Max = new #NAME#Reference();
+        public FloatReference Target = new FloatReference();
+        public FloatReference Min = new FloatReference();
+        public FloatReference Max = new FloatReference();
 
-        public #TYPE# Value
+        public float Value
         {
             get
             {
-                #TYPE# value = Target.Value;
-                #TYPE# maxValue = Max.Value;
+                float value = Target.Value;
+                float maxValue = Max.Value;
                         
                 if (value.CompareTo(maxValue) > 0)
                 {
@@ -22,7 +22,7 @@ namespace #NAMESPACE#
                     return maxValue;
                 }
                 
-                #TYPE# minValue = Min.Value;
+                float minValue = Min.Value;
                      
                 if (value.CompareTo(minValue) < 0)
                 {
@@ -34,8 +34,8 @@ namespace #NAMESPACE#
             }
             set
             {
-                #TYPE# current = Target.Value;
-                #TYPE# maxValue = Max.Value;
+                float current = Target.Value;
+                float maxValue = Max.Value;
                 
                 if (current.CompareTo(maxValue) != 0 && value.CompareTo(maxValue) > 0)
                 {
@@ -43,7 +43,7 @@ namespace #NAMESPACE#
                     return;
                 }
                 
-                #TYPE# minValue = Min.Value;
+                float minValue = Min.Value;
                      
                 if (current.CompareTo(maxValue) != 0 && value.CompareTo(minValue) < 0)
                 {
@@ -58,7 +58,7 @@ namespace #NAMESPACE#
             }
         }
 
-        private void OnMinValueChanged(#TYPE# minValue)
+        private void OnMinValueChanged(float minValue)
         {
             if (minValue.CompareTo(Target.Value) < 0)
             {
@@ -66,7 +66,7 @@ namespace #NAMESPACE#
             }
         }
         
-        private void OnMaxValueChanged(#TYPE# maxValue)
+        private void OnMaxValueChanged(float maxValue)
         {
             if (maxValue.CompareTo(Target.Value) > 0)
             {
@@ -74,14 +74,14 @@ namespace #NAMESPACE#
             }
         }
 
-        public void AddListener(Action<#TYPE#> listener)
+        public void AddListener(Action<float> listener)
         {
             Min.AddListener(OnMinValueChanged);
             Max.AddListener(OnMaxValueChanged);
             Target.AddListener(listener);
         }
         
-        public void RemoveListener(Action<#TYPE#> listener)
+        public void RemoveListener(Action<float> listener)
         {
             Min.RemoveListener(OnMinValueChanged);
             Max.RemoveListener(OnMaxValueChanged);

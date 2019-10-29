@@ -3,9 +3,11 @@ using Fasteraune.Variables;
 
 #if UNITY_EDITOR
 
-class #NAME#VariableProxy : ScriptableObject
+namespace #NAMESPACE#
 {
-    public #TYPE# ProxyValue;
+    class #NAME#VariableProxy : ScriptableObject
+    {
+        public #TYPE# ProxyValue;
+    }
 }
-
 #endif

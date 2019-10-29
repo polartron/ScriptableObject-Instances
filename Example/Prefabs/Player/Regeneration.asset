@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 921ac7ed86ac35e4fb42ed766180dc2b, type: 3}
-  m_Name: Player Data
+  m_Script: {fileID: 11500000, guid: da06217ba57673348a1605838f6e3271, type: 3}
+  m_Name: Regeneration
   m_EditorClassIdentifier: 
-  InitialValue:
-    PlayerColor: {r: 1, g: 1, b: 1, a: 1}
-    RegenerationRate: 1
-    Experience: 0
-    Level: 0
+  InitialValue: 20

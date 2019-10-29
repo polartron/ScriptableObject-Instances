@@ -1,15 +1,18 @@
 using System;
 using Fasteraune.Variables;
 
-[Serializable]
-public class #NAME#Reference : BaseReference<#TYPE#, #NAME#Variable>
+namespace #NAMESPACE#
 {
-    public #NAME#Reference(#TYPE# Value) : base(Value)
+    [Serializable]
+    public class #NAME#Reference : BaseReference<#TYPE#, #NAME#Variable>
     {
-    }
+        public #NAME#Reference(#TYPE# Value) : base(Value)
+        {
+        }
 
-    public #NAME#Reference()
-    {
-        
+        public #NAME#Reference()
+        {
+            
+        }
     }
 }
