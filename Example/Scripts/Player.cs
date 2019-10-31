@@ -1,27 +1,61 @@
 ﻿using System;
-using Fasteraune.Variables;
+using Fasteraune.SO.Variables;
+using Generated.Events;
 using Generated.Variables;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Fasteraune.SO.Example
 {
-    public InstancedVariableOwner instancedVariableOwner;
-    public GameObject StatusPrefab;
-    public TransformReference StatusPrefabTransform;
-    private GameObject statusPrefabInstance;
-
-    private void Start()
+    public class Player : MonoBehaviour
     {
-        statusPrefabInstance = Instantiate(StatusPrefab);
-        statusPrefabInstance.GetComponent<RectTransform>().SetParent(StatusPrefabTransform.Value);
-        statusPrefabInstance.GetComponent<InstancedVariableOwner>().Parent = instancedVariableOwner;
-    }
+        public InstanceOwner instanceOwner;
+        public GameObject StatusPrefab;
+        public TransformReference StatusPrefabTransform;
+        private GameObject statusPrefabInstance;
 
-    private void OnDestroy()
-    {
-        if (statusPrefabInstance != null)
+        public FloatReferenceClamped Health;
+        public FloatEventReference OnDamagedEvent;
+        public FloatEventReference OnHealedEvent;
+
+        private void Start()
         {
-            Destroy(statusPrefabInstance);
+            statusPrefabInstance = Instantiate(StatusPrefab);
+            statusPrefabInstance.GetComponent<RectTransform>().SetParent(StatusPrefabTransform.Value);
+            statusPrefabInstance.GetComponent<InstanceOwner>().Parent = instanceOwner;
+            
+            OnDamagedEvent.AddListener(OnDamaged);
+            OnHealedEvent.AddListener(OnHealed);
+            Health.AddListener(OnHealthChanged);
+        }
+
+        private void OnDamaged(float value)
+        {
+            Health.Value = Health.Value - value;
+        }
+
+        private void OnHealed(float value)
+        {
+            Health.Value = Health.Value + value;
+        }
+
+        private void OnHealthChanged(float value)
+        {
+            if (value <= 0f)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (statusPrefabInstance != null)
+            {
+                Destroy(statusPrefabInstance);
+            }
+            
+            OnDamagedEvent.RemoveListener(OnDamaged);
+            OnHealedEvent.RemoveListener(OnHealed);
+            Health.RemoveListener(OnHealthChanged);
         }
     }
 }

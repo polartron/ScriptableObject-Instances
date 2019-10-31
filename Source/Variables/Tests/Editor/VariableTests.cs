@@ -1,10 +1,8 @@
-﻿using System;
-using Fasteraune.Variables;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Fasteraune.Variables.Tests
+namespace Fasteraune.SO.Variables.Tests
 {
     public class VariableTests
     {
@@ -56,7 +54,7 @@ namespace Fasteraune.Variables.Tests
             floatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
-            var instancedVariableOwner = gameObject.AddComponent<InstancedVariableOwner>();
+            var instancedVariableOwner = gameObject.AddComponent<InstanceOwner>();
             floatReference.Connection = instancedVariableOwner;
             
             var changedValue = 0f;
@@ -140,7 +138,7 @@ namespace Fasteraune.Variables.Tests
             secondFloatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
-            var instancedVariableOwner = gameObject.AddComponent<InstancedVariableOwner>();
+            var instancedVariableOwner = gameObject.AddComponent<InstanceOwner>();
             floatReference.Connection = instancedVariableOwner;
 
             floatReference.Value = 10f;
@@ -166,7 +164,7 @@ namespace Fasteraune.Variables.Tests
             secondFloatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
-            var instancedVariableOwner = gameObject.AddComponent<InstancedVariableOwner>();
+            var instancedVariableOwner = gameObject.AddComponent<InstanceOwner>();
             floatReference.Connection = instancedVariableOwner;
             secondFloatReference.Connection = instancedVariableOwner;
 

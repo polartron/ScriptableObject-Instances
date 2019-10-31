@@ -1,10 +1,9 @@
 using System;
-using Fasteraune.Variables;
 
-namespace Fasteraune.Variables
+namespace Fasteraune.SO.Variables
 {
 	[Serializable]
-	public class FloatReference : BaseReference<float, FloatVariable>
+	public class FloatReference : VariableReference<float, FloatVariable>
 	{
 	    public FloatReference(float Value) : base(Value)
 	    {

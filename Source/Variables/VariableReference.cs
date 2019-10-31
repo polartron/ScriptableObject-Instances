@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Fasteraune.Variables
+namespace Fasteraune.SO.Variables
 {
     [Serializable]
-    public abstract class BaseReference
+    public abstract class VariableReference
     {
     }
 
@@ -16,12 +16,12 @@ namespace Fasteraune.Variables
     }
 
     [Serializable]
-    public class BaseReference<TVariableType, TVariable> : BaseReference, IDisposable where TVariable : Variable<TVariableType>
+    public class VariableReference<TVariableType, TVariable> : VariableReference, IDisposable where TVariable : Variable<TVariableType>
     {
         public ReferenceType Type = ReferenceType.ConstantValue;
         public TVariableType ConstantValue;
         public TVariable Variable;
-        public InstancedVariableOwner Connection;
+        public InstanceOwner Connection;
         private event Action<TVariableType> OnConstantValueChanged;
         private Variable<TVariableType> instancedVariable;
 
@@ -42,16 +42,16 @@ namespace Fasteraune.Variables
         private bool caching = false;
         private TVariableType cachedVariable;
 
-        public BaseReference()
+        public VariableReference()
         {
         }
 
-        public BaseReference(TVariableType value) : base()
+        public VariableReference(TVariableType value) : base()
         {
             Value = value;
         }
 
-        public static implicit operator TVariableType(BaseReference<TVariableType, TVariable> reference)
+        public static implicit operator TVariableType(VariableReference<TVariableType, TVariable> reference)
         {
             return reference.Value;
         }

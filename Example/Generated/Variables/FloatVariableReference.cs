@@ -1,10 +1,10 @@
 using System;
-using Fasteraune.Variables;
+using Fasteraune.SO.Variables;
 
 namespace Generated.Variables
 {
     [Serializable]
-    public class FloatReference : BaseReference<float, FloatVariable>
+    public class FloatReference : VariableReference<float, FloatVariable>
     {
         public FloatReference(float Value) : base(Value)
         {
@@ -12,7 +12,6 @@ namespace Generated.Variables
 
         public FloatReference()
         {
-            
         }
     }
 }

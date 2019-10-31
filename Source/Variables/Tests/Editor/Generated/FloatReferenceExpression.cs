@@ -2,7 +2,7 @@ using System;
 using B83.LogicExpressionParser;
 using Fasteraune.Variables;
 
-namespace Fasteraune.Variables
+namespace Fasteraune.SO.Variables
 {
 	[Serializable]
 	public class FloatReferenceExpression : IDisposable

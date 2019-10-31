@@ -1,5 +1,4 @@
 using UnityEngine;
-using Fasteraune.Variables;
 
 #if UNITY_EDITOR
 

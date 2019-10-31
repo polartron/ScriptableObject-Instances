@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Fasteraune.SO.Variables;
 
-namespace Fasteraune.Variables.Editor
+namespace Fasteraune.SO.Editor.Variables
 {
-    [CustomPropertyDrawer(typeof(BaseReference), true)]
-    public class ReferenceDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(VariableReference), true)]
+    public class VariablesDrawer : PropertyDrawer
     {
         private readonly string[] popupOptions =
             { "Use Constant Value", "Use Shared Variable", "Use Instanced Variable" };
@@ -20,84 +18,8 @@ namespace Fasteraune.Variables.Editor
 
         private Texture2D backgroundTexture = new Texture2D(0, 0);
 
-        /// https://answers.unity.com/questions/929293/get-field-type-of-serializedproperty.html
-        public static Type GetSerializedPropertyType(SerializedProperty property)
-        {
-            var parts = property.propertyPath.Split('.');
-
-            var currentType = property.serializedObject.targetObject.GetType();
-
-            for (var i = 0; i < parts.Length; i++)
-            {
-                var field = currentType.GetField(parts[i],
-                    BindingFlags.NonPublic |
-                    BindingFlags.Public |
-                    BindingFlags.FlattenHierarchy |
-                    BindingFlags.Instance);
-
-                if (field != null)
-                {
-                    currentType = field.FieldType;
-                }
-            }
-
-            var targetType = currentType;
-
-            return targetType;
-        }
-
-        public ScriptableObject MakeNewScriptableObject(SerializedProperty property)
-        {
-            var saveDestination = "";
-
-            var monoBehaviour = property.serializedObject.targetObject as MonoBehaviour;
-
-            if (monoBehaviour != null && PrefabUtility.IsPartOfAnyPrefab(monoBehaviour.gameObject))
-            {
-                var prefab = PrefabUtility.GetOutermostPrefabInstanceRoot(monoBehaviour.gameObject);
-
-                if (prefab != null)
-                {
-                    saveDestination = Path.GetDirectoryName(AssetDatabase.GetAssetPath(prefab));
-                }
-            }
-            else
-            {
-                saveDestination = Application.dataPath;
-            }
-
-            var type = GetSerializedPropertyType(property);
-            var niceName = ObjectNames.NicifyVariableName(type.Name);
-            saveDestination = EditorUtility.SaveFilePanel("Save as", saveDestination, niceName, "asset");
-
-            if (string.IsNullOrEmpty(saveDestination))
-            {
-                return null;
-            }
-
-            if (saveDestination.Contains("Assets/"))
-            {
-                saveDestination = "Assets" + saveDestination.Substring(Application.dataPath.Length);
-            }
-            else
-            {
-                Debug.LogError("Creating new variables this way outside of the Assets folder is not supported");
-                return null;
-            }
-
-            if (!string.IsNullOrEmpty(saveDestination))
-            {
-                var obj = ScriptableObject.CreateInstance(type);
-                AssetDatabase.CreateAsset(obj, saveDestination);
-                AssetDatabase.Refresh();
-                return obj;
-            }
-
-            return null;
-        }
-
         private void DrawInstancedVariableRuntimeValue(Variable variable, Rect position,
-            InstancedVariableOwner owner)
+            InstanceOwner owner)
         {
             if (owner != null && variable != null)
             {
@@ -150,7 +72,7 @@ namespace Fasteraune.Variables.Editor
 
             if (EditorGUI.EndChangeCheck())
             {
-                wrapper.ApplyModifiedProperties();
+                wrapper.ApplyModifiedProperties();    
                 target.ApplyModifiedValue(wrapper);
             }
         }
@@ -176,7 +98,7 @@ namespace Fasteraune.Variables.Editor
             var connection = property.FindPropertyRelative("Connection");
 
             var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
-            var instancedVariableOwner = connection.objectReferenceValue as InstancedVariableOwner;
+            var instancedVariableOwner = connection.objectReferenceValue as InstanceOwner;
             var variable = variableProperty.objectReferenceValue as Variable;
 
             switch (referenceTypeEnum)
@@ -230,7 +152,7 @@ namespace Fasteraune.Variables.Editor
 
                             if (GUI.Button(newButtonRect, "New"))
                             {
-                                variableProperty.objectReferenceValue = MakeNewScriptableObject(variableProperty);
+                                variableProperty.objectReferenceValue = Utils.MakeNewScriptableObject(variableProperty);
                             }
                         }
 
@@ -281,7 +203,7 @@ namespace Fasteraune.Variables.Editor
 
                             if (GUI.Button(newButtonRect, "New"))
                             {
-                                variableProperty.objectReferenceValue = MakeNewScriptableObject(variableProperty);
+                                variableProperty.objectReferenceValue = Utils.MakeNewScriptableObject(variableProperty);
                             }
                         }
 

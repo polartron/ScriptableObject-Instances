@@ -1,6 +1,6 @@
 using System;
 
-namespace Fasteraune.Variables
+namespace Fasteraune.SO.Variables
 {
 	[Serializable]
 	public class FloatReferenceClamped : IDisposable

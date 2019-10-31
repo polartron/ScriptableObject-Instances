@@ -1,5 +1,5 @@
 using UnityEngine;
-using Fasteraune.Variables;
+using Fasteraune.SO.Variables;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

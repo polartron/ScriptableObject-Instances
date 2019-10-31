@@ -4,7 +4,7 @@ using Fasteraune.Variables;
 using UnityEditor;
 #endif
 
-namespace Fasteraune.Variables
+namespace Fasteraune.SO.Variables
 {
 	[CreateAssetMenu(menuName = "Variables/Float")]
 	public class FloatVariable : Variable<float>

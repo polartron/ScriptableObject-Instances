@@ -6,21 +6,12 @@ using UnityEditor;
 
 #endif
 
-namespace Fasteraune.Variables
+namespace Fasteraune.SO.Variables
 {
     [Serializable]
-    public abstract class Variable : ScriptableObject
+    public abstract class Variable : ScriptableObjectBase
     {
-        internal Dictionary<InstancedVariableOwner, ScriptableObject> instanceValues
-            = new Dictionary<InstancedVariableOwner, ScriptableObject>();
-
-        internal void ClearConnection(InstancedVariableOwner connection)
-        {
-            instanceValues.Remove(connection);
-        }
-
 #if UNITY_EDITOR
-
         public virtual SerializedObject GetRuntimeValueWrapper()
         {
             return null;
@@ -36,7 +27,6 @@ namespace Fasteraune.Variables
         }
 
         internal abstract void SaveRuntimeValue(Variable target);
-
 #endif
     }
 
@@ -48,7 +38,7 @@ namespace Fasteraune.Variables
 
         public event Action<T> OnValueChanged;
 
-        public Variable<T> GetOrCreateInstancedVariable(InstancedVariableOwner connection)
+        public Variable<T> GetOrCreateInstancedVariable(InstanceOwner connection)
         {
             if (instanceValues.ContainsKey(connection))
             {

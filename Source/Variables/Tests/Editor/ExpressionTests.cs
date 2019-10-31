@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 
-namespace Fasteraune.Variables.Tests
+namespace Fasteraune.SO.Variables.Tests
 {
     public class ExpressionTests
     {
@@ -67,7 +65,7 @@ namespace Fasteraune.Variables.Tests
             var second = new FloatReference();
 
             var gameObject = new GameObject();
-            var instancedVariableOwner = gameObject.AddComponent<InstancedVariableOwner>();
+            var instancedVariableOwner = gameObject.AddComponent<InstanceOwner>();
             first.Connection = instancedVariableOwner;
             second.Connection = instancedVariableOwner;
 
@@ -91,7 +89,7 @@ namespace Fasteraune.Variables.Tests
             var second = new FloatReference();
 
             var gameObject = new GameObject();
-            var instancedVariableOwner = gameObject.AddComponent<InstancedVariableOwner>();
+            var instancedVariableOwner = gameObject.AddComponent<InstanceOwner>();
             
             first.Connection = instancedVariableOwner;
             second.Connection = instancedVariableOwner;
