@@ -8,21 +8,12 @@ namespace Fasteraune.SO.Example
 {
     public class Player : MonoBehaviour
     {
-        public InstanceOwner instanceOwner;
-        public GameObject StatusPrefab;
-        public TransformVariableReference StatusPrefabTransform;
-        private GameObject statusPrefabInstance;
-
         public FloatVariableReferenceClamped Health;
         public FloatEventReference OnDamagedEvent;
         public FloatEventReference OnHealedEvent;
 
         private void Start()
         {
-            statusPrefabInstance = Instantiate(StatusPrefab);
-            statusPrefabInstance.GetComponent<RectTransform>().SetParent(StatusPrefabTransform.Value);
-            statusPrefabInstance.GetComponent<InstanceOwner>().Parent = instanceOwner;
-            
             OnDamagedEvent.AddListener(OnDamaged);
             OnHealedEvent.AddListener(OnHealed);
             Health.AddListener(OnHealthChanged);
@@ -48,11 +39,6 @@ namespace Fasteraune.SO.Example
 
         private void OnDestroy()
         {
-            if (statusPrefabInstance != null)
-            {
-                Destroy(statusPrefabInstance);
-            }
-            
             OnDamagedEvent.RemoveListener(OnDamaged);
             OnHealedEvent.RemoveListener(OnHealed);
             Health.RemoveListener(OnHealthChanged);

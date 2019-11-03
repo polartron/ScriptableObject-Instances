@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 114198851444590868}
   - component: {fileID: 708027941256256753}
   - component: {fileID: 7980947994142832613}
+  - component: {fileID: 5695914794429994123}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -45,14 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9febcd134f0d63844bc438d42f019b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instanceOwner: {fileID: 7980947994142832613}
-  StatusPrefab: {fileID: 1856336477838808, guid: 0328d6426112c524a91b3fa61ed65f64,
-    type: 3}
-  StatusPrefabTransform:
-    Type: 1
-    ConstantValue: {fileID: 0}
-    Variable: {fileID: 11400000, guid: 21c3dbb1a6ddaa246a1db6ba88b3894b, type: 2}
-    Connection: {fileID: 0}
   Health:
     Target:
       Type: 2
@@ -123,3 +116,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Parent: {fileID: 0}
+--- !u!114 &5695914794429994123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070171583294798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5dcaf381b5889542b923f059870c6fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StatusPrefab: {fileID: 1856336477838808, guid: 0328d6426112c524a91b3fa61ed65f64,
+    type: 3}
+  Parent:
+    Type: 1
+    ConstantValue: {fileID: 0}
+    Variable: {fileID: 11400000, guid: 21c3dbb1a6ddaa246a1db6ba88b3894b, type: 2}
+    Connection: {fileID: 0}
