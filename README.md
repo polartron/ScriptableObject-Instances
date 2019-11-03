@@ -23,9 +23,9 @@ ScriptableObject-Instances allows you to have runtime variables and events tied 
 ## Installation
 
 ### Manual Installation
-- Download the repository and put the files in a folder named **com.fasteraune.scriptableobjectvariables** in your **Packages** folder located next to your **Assets** folder
+- Download the repository and put the files in a folder named **com.fasteraune.scriptableobjectinstances** in your **Packages** folder located next to your **Assets** folder
 - Add the following to your **manifest.json** file in your **Packages** folder 
-> "com.fasteraune.scriptableobjectvariables": "file:com.fasteraune.scriptableobjectvariables"
+> "com.fasteraune.scriptableobjectinstances": "file:com.fasteraune.scriptableobjectinstances"
 - Follow the https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html workflow and add a reference to **Fasteraune.SO.Instances.asmdef**
 
 ## Usage
