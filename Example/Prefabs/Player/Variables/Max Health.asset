@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4aa477edfc33394489a445278798a0f, type: 3}
   m_Name: Max Health
   m_EditorClassIdentifier: 
-  InitialValue: 0
+  InitialValue: 200

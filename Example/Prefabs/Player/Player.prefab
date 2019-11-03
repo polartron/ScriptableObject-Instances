@@ -51,7 +51,7 @@ MonoBehaviour:
   StatusPrefabTransform:
     Type: 1
     ConstantValue: {fileID: 0}
-    Variable: {fileID: 0}
+    Variable: {fileID: 11400000, guid: 21c3dbb1a6ddaa246a1db6ba88b3894b, type: 2}
     Connection: {fileID: 0}
   Health:
     Target:
