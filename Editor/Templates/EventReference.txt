@@ -1,0 +1,13 @@
+using System;
+using Fasteraune.SO.Events;
+
+namespace #NAMESPACE#.Events
+{
+    [Serializable]
+    public class #NAME#EventReference : EventReference<#TYPE#, #NAME#Event>
+    {
+        public #NAME#EventReference()
+        {
+        }
+    }
+}

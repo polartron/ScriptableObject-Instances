@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class StatusText : MonoBehaviour
 {
-    [SerializeField] private FloatReference Health;
-    [SerializeField] private FloatReference MaxHealth;
+    [SerializeField] private FloatVariableReference Health;
+    [SerializeField] private FloatVariableReference MaxHealth;
 
     public Image HealthImage;
     public Image Portrait;

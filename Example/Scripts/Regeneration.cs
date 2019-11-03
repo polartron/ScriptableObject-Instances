@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Regeneration : MonoBehaviour
 {
-    [SerializeField] private FloatReferenceClamped Health;
-    [SerializeField] private FloatReference PassiveRegeneration;
+    [SerializeField] private FloatVariableReferenceClamped Health;
+    [SerializeField] private FloatVariableReference PassiveRegeneration;
 
     // Start is called before the first frame update
     void Start()

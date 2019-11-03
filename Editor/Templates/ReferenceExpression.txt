@@ -1,17 +1,17 @@
 using System;
 using B83.LogicExpressionParser;
-using Fasteraune.Variables;
+using Fasteraune.SO.Variables;
 
-namespace #NAMESPACE#
+namespace #NAMESPACE#.Variables
 {
     [Serializable]
-    public class #NAME#ReferenceExpression : IDisposable
+    public class #NAME#VariableReferenceExpression : IDisposable
     {
         public class ExpressionNumberProvider : INumberProvider
         {
-            private #NAME#Reference reference;
+            private #NAME#VariableReference reference;
             
-            public ExpressionNumberProvider(#NAME#Reference reference)
+            public ExpressionNumberProvider(#NAME#VariableReference reference)
             {
                 this.reference = reference;
             }
@@ -26,7 +26,7 @@ namespace #NAMESPACE#
         public class ExpressionVariables
         {
             public string Name;
-            public #NAME#Reference Reference;
+            public #NAME#VariableReference Reference;
         }
         
         public string Expression;
@@ -88,8 +88,8 @@ namespace #NAMESPACE#
     [Serializable]
     public abstract class Operation#NAME#Reference : IDisposable
     {
-        public #NAME#Reference First = new #NAME#Reference();
-        public #NAME#Reference Second = new #NAME#Reference();
+        public #NAME#VariableReference First = new #NAME#VariableReference();
+        public #NAME#VariableReference Second = new #NAME#VariableReference();
 
         public abstract #TYPE# Value { get; }
 

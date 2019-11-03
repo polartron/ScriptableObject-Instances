@@ -9,8 +9,7 @@ namespace Fasteraune.SO.Editor.Events
     [CustomPropertyDrawer(typeof(EventReference), true)]
     public class EventsDrawer : PropertyDrawer
     {
-        private readonly string[] popupOptions =
-            { "Use Local Event", "Use Shared Event", "Use Instanced Event" };
+        private readonly string[] popupOptions = { "Use Shared Event", "Use Instanced Event" };
 
         private readonly Dictionary<string, bool> toggles = new Dictionary<string, bool>();
 
@@ -42,9 +41,6 @@ namespace Fasteraune.SO.Editor.Events
 
             switch (referenceTypeEnum)
             {
-                case ReferenceType.LocalEvent:
-                    label.text += " (Local)";
-                    break;
                 case ReferenceType.SharedReference:
                     label.text += " (Shared)";
                     break;

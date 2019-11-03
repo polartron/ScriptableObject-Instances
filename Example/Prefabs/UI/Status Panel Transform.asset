@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4ca51b7f3d79047b06df1afac67d85, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b9a66527fefa8c41948ceda7271ae75, type: 3}
   m_Name: Status Panel Transform
   m_EditorClassIdentifier: 
   InitialValue: {fileID: 0}

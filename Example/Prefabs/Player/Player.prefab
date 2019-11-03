@@ -51,7 +51,7 @@ MonoBehaviour:
   StatusPrefabTransform:
     Type: 1
     ConstantValue: {fileID: 0}
-    Variable: {fileID: 11400000, guid: 21c3dbb1a6ddaa246a1db6ba88b3894b, type: 2}
+    Variable: {fileID: 0}
     Connection: {fileID: 0}
   Health:
     Target:
@@ -67,14 +67,14 @@ MonoBehaviour:
     Max:
       Type: 2
       ConstantValue: 0
-      Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
+      Variable: {fileID: 11400000, guid: c42d1041452f0ac48a7611746de2879c, type: 2}
       Connection: {fileID: 7980947994142832613}
   OnDamagedEvent:
-    Type: 2
+    Type: 1
     Event: {fileID: 11400000, guid: 37c93d63d3c7fd04891639e66b78d49c, type: 2}
     Connection: {fileID: 7980947994142832613}
   OnHealedEvent:
-    Type: 2
+    Type: 1
     Event: {fileID: 11400000, guid: 0112126458a4ca546a417a44c39612bd, type: 2}
     Connection: {fileID: 7980947994142832613}
 --- !u!114 &708027941256256753
@@ -103,7 +103,7 @@ MonoBehaviour:
     Max:
       Type: 2
       ConstantValue: 0
-      Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
+      Variable: {fileID: 11400000, guid: c42d1041452f0ac48a7611746de2879c, type: 2}
       Connection: {fileID: 7980947994142832613}
   PassiveRegeneration:
     Type: 1

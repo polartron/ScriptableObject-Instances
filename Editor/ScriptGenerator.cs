@@ -38,10 +38,11 @@ namespace Fasteraune.Variables.Editor
                 return null;
             }
 
+
             return asset.text;
         }
 
-        public static void GenerateScripts(Type[] types, string path, string nameSpace = "Generated.Variables")
+        public static void GenerateScripts(Type[] types, string path, string nameSpace = "Generated")
         {
             if (!Directory.Exists(path))
             {
@@ -66,7 +67,7 @@ namespace Fasteraune.Variables.Editor
 
                 CreateScriptFile(GetTemplate("Variable"), path, typeName, nameSpace, name, "Variable.cs");
                 CreateScriptFile(GetTemplate("VariableProxy"), path, typeName, nameSpace, name, "VariableProxy.cs");
-                CreateScriptFile(GetTemplate("Reference"), path, typeName, nameSpace, name, "Reference.cs");
+                CreateScriptFile(GetTemplate("VariableReference"), path, typeName, nameSpace, name, "VariableReference.cs");
 
                 if (typeof(IComparable).IsAssignableFrom(generateType))
                 {
@@ -79,6 +80,10 @@ namespace Fasteraune.Variables.Editor
                     CreateScriptFile(GetTemplate("ReferenceExpression"), path, typeName, nameSpace, name,
                         "ReferenceExpression.cs");
                 }
+                
+                CreateScriptFile(GetTemplate("Event"), path, typeName, nameSpace, name, "Event.cs");
+                CreateScriptFile(GetTemplate("EventReference"), path, typeName, nameSpace, name, "EventReference.cs");
+                CreateScriptFile(GetTemplate("EventInvokable"), path, typeName, nameSpace, name, "EventInvokable.cs");
             }
 
             AssetDatabase.Refresh();

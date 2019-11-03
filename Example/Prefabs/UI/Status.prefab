@@ -365,7 +365,7 @@ MonoBehaviour:
   MaxHealth:
     Type: 2
     ConstantValue: 0
-    Variable: {fileID: 11400000, guid: 2331856172f344e41bb42286be85e68b, type: 2}
+    Variable: {fileID: 11400000, guid: c42d1041452f0ac48a7611746de2879c, type: 2}
     Connection: {fileID: 4680051931760965176}
   HealthImage: {fileID: 114800476818403116}
   Portrait: {fileID: 114982751874513170}
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 3032859467262986409}
   - component: {fileID: 88697518621769146}
   - component: {fileID: 4967370418184866919}
-  - component: {fileID: 6992283768561051753}
+  - component: {fileID: 199143711547739464}
   m_Layer: 5
   m_Name: Damage
   m_TagString: Untagged
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6992283768561051753}
+      - m_Target: {fileID: 0}
         m_MethodName: Invoke
         m_Mode: 4
         m_Arguments:
@@ -512,7 +512,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6992283768561051753
+--- !u!114 &199143711547739464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -521,11 +521,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2346272221638365965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e76dcabe7cd255439ab9192ae889722, type: 3}
+  m_Script: {fileID: 11500000, guid: 371e7d1cb690bc04d9e00455f66928aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloatEvent:
-    Type: 2
+  Reference:
+    Type: 1
     Event: {fileID: 11400000, guid: 37c93d63d3c7fd04891639e66b78d49c, type: 2}
     Connection: {fileID: 4680051931760965176}
 --- !u!1 &3206575577054620895
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 6102570972229138036}
   - component: {fileID: 5225811367434497408}
   - component: {fileID: 1927395526146836849}
-  - component: {fileID: 807798874109251968}
+  - component: {fileID: 7421404435138774767}
   m_Layer: 5
   m_Name: Heal
   m_TagString: Untagged
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 807798874109251968}
+      - m_Target: {fileID: 0}
         m_MethodName: Invoke
         m_Mode: 4
         m_Arguments:
@@ -816,7 +816,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &807798874109251968
+--- !u!114 &7421404435138774767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -825,10 +825,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7265798297548182537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e76dcabe7cd255439ab9192ae889722, type: 3}
+  m_Script: {fileID: 11500000, guid: 371e7d1cb690bc04d9e00455f66928aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloatEvent:
-    Type: 2
+  Reference:
+    Type: 1
     Event: {fileID: 11400000, guid: 0112126458a4ca546a417a44c39612bd, type: 2}
     Connection: {fileID: 4680051931760965176}

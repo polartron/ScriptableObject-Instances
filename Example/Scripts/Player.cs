@@ -10,10 +10,10 @@ namespace Fasteraune.SO.Example
     {
         public InstanceOwner instanceOwner;
         public GameObject StatusPrefab;
-        public TransformReference StatusPrefabTransform;
+        public TransformVariableReference StatusPrefabTransform;
         private GameObject statusPrefabInstance;
 
-        public FloatReferenceClamped Health;
+        public FloatVariableReferenceClamped Health;
         public FloatEventReference OnDamagedEvent;
         public FloatEventReference OnHealedEvent;
 

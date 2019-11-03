@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TransformParent : MonoBehaviour
 {
-    public TransformReference Parent;
+    public TransformVariableReference Parent;
     
     void Awake()
     {

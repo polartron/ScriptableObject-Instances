@@ -1,0 +1,50 @@
+using UnityEngine;
+using System;
+using Fasteraune.SO.Events;
+
+namespace #NAMESPACE#.Events
+{
+    [CreateAssetMenu(menuName = "Event/Empty")]
+    [Serializable]
+    public class EmptyEvent : Event
+    {
+        public event Action OnEvent;
+
+        public EmptyEvent GetOrCreateInstancedVariable(InstanceOwner connection)
+        {
+            if (instanceValues.ContainsKey(connection))
+            {
+                return instanceValues[connection] as EmptyEvent;
+            }
+
+            var instance = CreateInstance(GetType().Name) as EmptyEvent;
+
+            if (instance == null)
+            {
+                Debug.LogError("Could not create instance of type " + GetType().Name);
+                return null;
+            }
+
+            instanceValues.Add(connection, instance);
+            connection.Register(instance);
+            return instanceValues[connection] as EmptyEvent;
+        }
+
+        public void Invoke()
+        {
+            OnEvent?.Invoke();
+        }
+    }
+
+	namespace #NAMESPACE#.Events
+	{
+	    [Serializable]
+	    public class EmptyEventReference : EventReference<#TYPE#, #NAME#Event>
+	    {
+	        public EmptyEventReference()
+	        {
+	        }
+	    }
+	}
+
+}

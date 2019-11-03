@@ -10,7 +10,6 @@ namespace Fasteraune.SO.Events
 
     public enum ReferenceType
     {
-        LocalEvent,
         SharedReference,
         InstancedReference
     }
@@ -18,10 +17,9 @@ namespace Fasteraune.SO.Events
     [Serializable]
     public class EventReference<TEventType, TEvent> : EventReference where TEvent : Event<TEventType>
     {
-        public ReferenceType Type = ReferenceType.LocalEvent;
+        public ReferenceType Type = ReferenceType.SharedReference;
         public TEvent Event;
         public InstanceOwner Connection;
-        private event Action<TEventType> OnLocalEvent;
         
         private Event<TEventType> instancedEvent;
 
@@ -39,20 +37,10 @@ namespace Fasteraune.SO.Events
             }
         }
 
-        public EventReference()
-        {
-        }
-
         public virtual void Invoke(TEventType value)
         {
             switch (Type)
             {
-                case ReferenceType.LocalEvent:
-                {
-                    OnLocalEvent?.Invoke(value);
-                    break;
-                }
-
                 case ReferenceType.SharedReference:
                 {
                     if (VariableReferenceMissing())
@@ -85,12 +73,6 @@ namespace Fasteraune.SO.Events
         {
             switch (Type)
             {
-                case ReferenceType.LocalEvent:
-                {
-                    OnLocalEvent += listener;
-                    break;
-                }
-
                 case ReferenceType.SharedReference:
                 {
                     if (VariableReferenceMissing())
@@ -122,12 +104,6 @@ namespace Fasteraune.SO.Events
         {
             switch (Type)
             {
-                case ReferenceType.LocalEvent:
-                {
-                    OnLocalEvent -= listener;
-                    break;
-                }
-
                 case ReferenceType.SharedReference:
                 {
                     if (VariableReferenceMissing())

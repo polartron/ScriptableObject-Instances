@@ -1,0 +1,10 @@
+using UnityEngine;
+using Fasteraune.SO.Events;
+
+namespace #NAMESPACE#.Events
+{
+    [CreateAssetMenu(menuName = "Event/#NAME#")]
+    public class #NAME#Event : Event<#TYPE#>
+    {
+    }
+}

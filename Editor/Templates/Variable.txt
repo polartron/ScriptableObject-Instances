@@ -1,10 +1,10 @@
 using UnityEngine;
-using Fasteraune.Variables;
+using Fasteraune.SO.Variables;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace #NAMESPACE#
+namespace #NAMESPACE#.Variables
 {
     [CreateAssetMenu(menuName = "Variables/#NAME#")]
     public class #NAME#Variable : Variable<#TYPE#>

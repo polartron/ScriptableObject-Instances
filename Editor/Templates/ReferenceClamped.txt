@@ -1,13 +1,13 @@
 using System;
-
-namespace #NAMESPACE#
+using Fasteraune.SO.Variables;
+namespace #NAMESPACE#.Variables
 {
     [Serializable]
-    public class #NAME#ReferenceClamped : IDisposable
+    public class #NAME#VariableReferenceClamped : IDisposable
     {
-        public #NAME#Reference Target = new #NAME#Reference();
-        public #NAME#Reference Min = new #NAME#Reference();
-        public #NAME#Reference Max = new #NAME#Reference();
+        public #NAME#VariableReference Target = new #NAME#VariableReference();
+        public #NAME#VariableReference Min = new #NAME#VariableReference();
+        public #NAME#VariableReference Max = new #NAME#VariableReference();
 
         public #TYPE# Value
         {

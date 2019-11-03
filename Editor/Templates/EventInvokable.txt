@@ -1,0 +1,15 @@
+using UnityEngine;
+
+namespace #NAMESPACE#.Events
+{
+    public class #NAME#EventInvokable : MonoBehaviour
+    {
+        public #NAME#EventReference Reference;
+
+        public void Invoke(#TYPE# value)
+        {
+            Reference.Invoke(value);
+        }
+    }
+}
+

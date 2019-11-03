@@ -1,9 +1,9 @@
 using UnityEngine;
-using Fasteraune.Variables;
+using Fasteraune.SO.Variables;
 
 #if UNITY_EDITOR
 
-namespace #NAMESPACE#
+namespace #NAMESPACE#.Variables
 {
     class #NAME#VariableProxy : ScriptableObject
     {
