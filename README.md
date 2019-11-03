@@ -3,10 +3,11 @@ Based on the Unite Austin 2017 talk by Ryan Hipple.
 https://www.youtube.com/watch?v=raQ3iHhE_Kk
 
 ## Description
-ScriptableObject-Instances allows you to have runtime variables and events tied to unique instances of your prefabs. This is an extension built upon the original implementation by Ryan Hipple where you could only have global ScriptableObjects at the project level. 
+ScriptableObject-Instances allows you to have runtime variables and events tied to unique instances of your prefabs. This is an extension built upon the original implementation by Ryan Hipple where you could only have shared global ScriptableObjects at the project level.
 
 ![Example Flow](https://i.imgur.com/OWPdgei.png)
 
+![Variable Types](https://i.imgur.com/X08VBnb.png)
 ## Features
 
 * Global Scriptable Object Variables
@@ -17,6 +18,7 @@ ScriptableObject-Instances allows you to have runtime variables and events tied 
 * Clamped Scriptable Object References
 * Expression based Scriptable Object References
 * Added/Subtracted/Multiplied/Divided Scriptable Object References
+* Code Generator
 
 ## Installation
 
@@ -30,7 +32,9 @@ ScriptableObject-Instances allows you to have runtime variables and events tied 
 
 A complete example can be found in the Example folder
 
-## Script Generation Example
+## Code Generation Example
+
+The following is an example of an editor script you can add to your own project in order to generate the files you need. 
 
 ```
 using System;
