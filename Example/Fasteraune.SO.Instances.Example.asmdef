@@ -1,14 +1,14 @@
 {
-    "name": "Fasteraune.Variables.Example",
+    "name": "Fasteraune.SO.Instances.Example",
     "references": [
-        "Fasteraune.Variables"
+        "Fasteraune.SO.Instances"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

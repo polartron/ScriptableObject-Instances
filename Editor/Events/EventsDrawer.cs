@@ -1,10 +1,9 @@
-﻿
-using System.Collections.Generic;
-using Fasteraune.SO.Events;
+﻿using System.Collections.Generic;
+using Fasteraune.SO.Instances.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Fasteraune.SO.Editor.Events
+namespace Fasteraune.SO.Instances.Events.Editor
 {
     [CustomPropertyDrawer(typeof(EventReference), true)]
     public class EventsDrawer : PropertyDrawer

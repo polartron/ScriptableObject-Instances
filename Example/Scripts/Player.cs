@@ -1,10 +1,8 @@
-﻿using System;
-using Fasteraune.SO.Variables;
-using Generated.Events;
+﻿using Generated.Events;
 using Generated.Variables;
 using UnityEngine;
 
-namespace Fasteraune.SO.Example
+namespace Fasteraune.SO.Instances.Example
 {
     public class Player : MonoBehaviour
     {
@@ -33,6 +31,7 @@ namespace Fasteraune.SO.Example
         {
             if (value <= 0f)
             {
+                Debug.Log("Player died!");
                 Destroy(gameObject);
             }
         }

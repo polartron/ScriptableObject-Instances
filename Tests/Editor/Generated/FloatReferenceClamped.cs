@@ -1,5 +1,5 @@
 using System;
-using Fasteraune.SO.Variables;
+using Fasteraune.SO.Instances.Variables;
 namespace Generated.Variables
 {
     [Serializable]

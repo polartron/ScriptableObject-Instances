@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Fasteraune.SO.Variables.Tests
+namespace Fasteraune.SO.Instances.Variables.Tests
 {
     public class ExpressionTests
     {

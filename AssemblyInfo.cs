@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Fasteraune.Variables.Editor")]
+[assembly: InternalsVisibleTo("Fasteraune.SO.Instances.Editor")]

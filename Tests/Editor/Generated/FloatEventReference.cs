@@ -1,5 +1,5 @@
 using System;
-using Fasteraune.SO.Events;
+using Fasteraune.SO.Instances.Events;
 
 namespace Generated.Events
 {

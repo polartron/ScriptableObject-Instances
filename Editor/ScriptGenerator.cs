@@ -6,7 +6,7 @@ using Microsoft.CSharp;
 using UnityEditor;
 using UnityEngine;
 
-namespace Fasteraune.Variables.Editor
+namespace Fasteraune.SO.Instances.Editor
 {
     public class ScriptGenerator
     {

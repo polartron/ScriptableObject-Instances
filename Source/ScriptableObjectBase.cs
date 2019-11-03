@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Fasteraune.SO
+namespace Fasteraune.SO.Instances
 {
     [Serializable]
     public class ScriptableObjectBase : ScriptableObject

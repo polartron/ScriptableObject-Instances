@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Fasteraune.SO.Instances.Editor;
 using UnityEditor;
 using UnityEngine;
-using Fasteraune.SO.Variables;
+using Fasteraune.SO.Instances.Variables;
 
-namespace Fasteraune.SO.Editor.Variables
+namespace Fasteraune.SO.Instances.Variables.Editor
 {
     [CustomPropertyDrawer(typeof(VariableReference), true)]
     public class VariablesDrawer : PropertyDrawer

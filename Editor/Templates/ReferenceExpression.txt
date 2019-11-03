@@ -1,6 +1,6 @@
 using System;
 using B83.LogicExpressionParser;
-using Fasteraune.SO.Variables;
+using Fasteraune.SO.Instances.Variables;
 
 namespace #NAMESPACE#.Variables
 {
@@ -109,24 +109,24 @@ namespace #NAMESPACE#.Variables
     [Serializable]
     public class #NAME#ReferenceAdded : Operation#NAME#Reference
     {
-        public override float Value => First + Second;
+        public override #TYPE# Value => First + Second;
     }
 
     [Serializable]
     public class #NAME#ReferenceSubtracted : Operation#NAME#Reference
     {
-        public override float Value => First - Second;
+        public override #TYPE# Value => First - Second;
     }
 
     [Serializable]
     public class #NAME#ReferenceMultiplied : Operation#NAME#Reference
     {
-        public override float Value => First * Second;
+        public override #TYPE# Value => First * Second;
     }
 
     [Serializable]
     public class #NAME#ReferenceDivided : Operation#NAME#Reference
     {
-        public override float Value => First / Second;
+        public override #TYPE# Value => First / Second;
     }
 }

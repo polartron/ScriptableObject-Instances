@@ -1,4 +1,4 @@
-﻿using Fasteraune.SO;
+﻿using Fasteraune.SO.Instances;
 using Generated.Variables;
 using UnityEngine;
 

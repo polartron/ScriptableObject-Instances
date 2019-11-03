@@ -4,7 +4,7 @@ using Generated.Events;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Fasteraune.SO.Events.Tests
+namespace Fasteraune.SO.Instances.Events.Tests
 {
     public class EventTests
     {

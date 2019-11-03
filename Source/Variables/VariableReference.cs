@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Fasteraune.SO.Variables
+namespace Fasteraune.SO.Instances.Variables
 {
     [Serializable]
     public abstract class VariableReference

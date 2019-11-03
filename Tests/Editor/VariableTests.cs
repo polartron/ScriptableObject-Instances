@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Fasteraune.SO.Variables.Tests
+namespace Fasteraune.SO.Instances.Variables.Tests
 {
     public class VariableTests
     {

@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Fasteraune.SO.Editor
+namespace Fasteraune.SO.Instances.Editor
 {
     public class Utils
     {

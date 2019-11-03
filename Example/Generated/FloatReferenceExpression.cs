@@ -1,6 +1,6 @@
 using System;
 using B83.LogicExpressionParser;
-using Fasteraune.SO.Variables;
+using Fasteraune.SO.Instances.Variables;
 
 namespace Generated.Variables
 {

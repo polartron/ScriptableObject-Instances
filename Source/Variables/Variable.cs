@@ -6,7 +6,7 @@ using UnityEditor;
 
 #endif
 
-namespace Fasteraune.SO.Variables
+namespace Fasteraune.SO.Instances.Variables
 {
     [Serializable]
     public abstract class Variable : ScriptableObjectBase

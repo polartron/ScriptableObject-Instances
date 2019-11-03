@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Fasteraune.SO.Events
+namespace Fasteraune.SO.Instances.Events
 {
     [Serializable]
     public abstract class Event : ScriptableObjectBase
