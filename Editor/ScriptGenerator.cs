@@ -25,7 +25,7 @@ namespace Fasteraune.SO.Instances.Editor
             }
         }
 
-        private static string TemplatePath = "Packages/com.fasteraune.scriptableobjectvariables/Editor/Templates/";
+        private static string TemplatePath = "Packages/com.fasteraune.scriptableobjectinstances/Editor/Templates/";
 
         private static string GetTemplate(string template)
         {
