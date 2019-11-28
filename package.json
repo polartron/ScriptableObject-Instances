@@ -1,7 +1,7 @@
 {
   "name": "com.fasteraune.scriptableobjectinstances",
   "displayName": "ScriptableObject-Instances",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2019.2",
   "description": "Based on the Unite Austin 2017 talk by Ryan Hipple. This version allows you to have instanced objects as well.",
   "dependencies": { }
