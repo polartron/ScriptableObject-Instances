@@ -24,9 +24,9 @@ namespace Fasteraune.SO.Instances.Variables.Editor
         {
             if (owner != null && variable != null)
             {
-                if (variable.instanceValues.ContainsKey(owner))
+                if (variable.instances.ContainsKey(owner))
                 {
-                    var instancedVariable = variable.instanceValues[owner] as Variable;
+                    var instancedVariable = variable.instances[owner] as Variable;
                     DrawVariableRuntimeValue(variable, instancedVariable, position);
                 }
                 else

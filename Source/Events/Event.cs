@@ -15,9 +15,9 @@ namespace Fasteraune.SO.Instances.Events
 
         public Event<T> GetOrCreateInstancedVariable(InstanceOwner connection)
         {
-            if (instanceValues.ContainsKey(connection))
+            if (instances.ContainsKey(connection))
             {
-                return instanceValues[connection] as Event<T>;
+                return instances[connection] as Event<T>;
             }
 
             var instance = CreateInstance(GetType().Name) as Event<T>;
@@ -28,9 +28,9 @@ namespace Fasteraune.SO.Instances.Events
                 return null;
             }
 
-            instanceValues.Add(connection, instance);
+            instances.Add(connection, instance);
             connection.Register(instance);
-            return instanceValues[connection] as Event<T>;
+            return instances[connection] as Event<T>;
         }
 
         public void Invoke(T value)

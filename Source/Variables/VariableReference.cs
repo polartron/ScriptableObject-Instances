@@ -32,7 +32,7 @@ namespace Fasteraune.SO.Instances.Variables
                 if (instancedVariable == null)
                 {
                     var connection = Connection.Parent ? Connection.Parent : Connection;
-                    instancedVariable = Variable.GetOrCreateInstancedVariable(connection);
+                    instancedVariable = Variable.GetOrCreateInstancedVariable(connection) as Variable<TVariableType>;
                 }
 
                 return instancedVariable;

@@ -11,6 +11,8 @@ namespace Fasteraune.SO.Instances.Variables
     [Serializable]
     public abstract class Variable : ScriptableObjectBase
     {
+        public abstract Variable GetOrCreateInstancedVariable(InstanceOwner connection);
+        
 #if UNITY_EDITOR
         public virtual SerializedObject GetRuntimeValueWrapper()
         {
@@ -33,19 +35,22 @@ namespace Fasteraune.SO.Instances.Variables
     [Serializable]
     public class Variable<T> : Variable, ISerializationCallbackReceiver
     {
+        public Variable Base;
         public T InitialValue;
         [NonSerialized] public T RuntimeValue;
 
         public event Action<T> OnValueChanged;
 
-        public Variable<T> GetOrCreateInstancedVariable(InstanceOwner connection)
+        public override Variable GetOrCreateInstancedVariable(InstanceOwner connection)
         {
-            if (instanceValues.ContainsKey(connection))
+            if (instances.ContainsKey(connection))
             {
-                return instanceValues[connection] as Variable<T>;
+                return instances[connection] as Variable<T>;
             }
 
-            var instance = CreateInstance(GetType().Name) as Variable<T>;
+            Variable<T> instance = (Base != null)
+                ? Base.GetOrCreateInstancedVariable(connection) as Variable<T>
+                : CreateInstance(GetType().Name) as Variable<T>;
 
             if (instance == null)
             {
@@ -55,9 +60,9 @@ namespace Fasteraune.SO.Instances.Variables
 
             instance.InitialValue = InitialValue;
             instance.RuntimeValue = InitialValue;
-            instanceValues.Add(connection, instance);
+            instances.Add(connection, instance);
             connection.Register(instance);
-            return instanceValues[connection] as Variable<T>;
+            return instances[connection] as Variable<T>;
         }
 
         protected virtual T InternalValue
