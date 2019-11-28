@@ -46,7 +46,8 @@ namespace Fasteraune.SO.Instances.Editor
 
                 if (prefab != null)
                 {
-                    saveDestination = Path.GetDirectoryName(AssetDatabase.GetAssetPath(prefab));
+                    string assetPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab);
+                    saveDestination = Path.GetDirectoryName(assetPath);
                 }
             }
             else
