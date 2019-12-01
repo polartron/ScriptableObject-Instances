@@ -31,7 +31,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
                 }
                 else
                 {
-                    EditorGUI.LabelField(position, "Not initialized yet or part of a prefab");
+                    EditorGUI.LabelField(position, "Not instantiated yet or part of a prefab");
                 }
             }
         }
@@ -236,6 +236,12 @@ namespace Fasteraune.SO.Instances.Variables.Editor
 
         private void DrawProperty(Rect position, SerializedProperty property)
         {
+            if (property == null)
+            {
+                EditorGUI.LabelField(position, "Property does not have a value");
+                return;
+            }
+            
             if (!property.hasVisibleChildren)
             {
                 EditorGUI.PropertyField(position, property, GUIContent.none);
