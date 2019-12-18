@@ -34,5 +34,30 @@ namespace Fasteraune.SO.Instances
                 }
             }
         }
+
+        public bool HasInstanceOf(Variable variable)
+        {
+            if (variable.GetInstancedVariable(this) == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public VariableReference<TVariableType, TVariable> GetReferenceTo<TVariableType, TVariable>(TVariable variable) where TVariable : Variable<TVariableType>
+        {
+            if (variable.GetInstancedVariable(this) == null)
+            {
+                return null;
+            }
+            
+            return new VariableReference<TVariableType, TVariable>()
+            {
+                Connection = this,
+                Variable = variable,
+                Type = ReferenceType.InstancedReference
+            };
+        }
     }
 }
