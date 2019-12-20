@@ -7,11 +7,50 @@ namespace Fasteraune.SO.Instances
     [Serializable]
     public class ScriptableObjectBase : ScriptableObject
     {
-        internal Dictionary<InstanceOwner, ScriptableObject> instances = new Dictionary<InstanceOwner, ScriptableObject>();
+        internal Dictionary<InstanceOwner, ScriptableObjectBase> instances = new Dictionary<InstanceOwner, ScriptableObjectBase>();
 
         internal void ClearConnection(InstanceOwner connection)
         {
             instances.Remove(connection);
+        }
+
+        internal virtual ScriptableObjectBase GetOrCreateInstance(InstanceOwner connection)
+        {
+            if (instances.ContainsKey(connection))
+            {
+                return instances[connection];
+            }
+
+            var instance = CreateInstance(GetType().Name) as ScriptableObjectBase;
+
+            if (instance == null)
+            {
+                Debug.LogError("Could not create instance of type " + GetType().Name);
+                return null;
+            }
+
+            instances.Add(connection, instance);
+            connection.Register(instance);
+            
+            return instances[connection];
+        }
+
+        internal virtual ScriptableObjectBase GetInstance(InstanceOwner connection)
+        {
+            if (instances.ContainsKey(connection))
+            {
+                return instances[connection];
+            }
+
+            return null;
+        }
+        
+        internal void RemoveInstance(InstanceOwner connection)
+        {
+            if (instances.ContainsKey(connection))
+            {
+                ClearConnection(connection);
+            }
         }
     }
 }

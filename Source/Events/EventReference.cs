@@ -6,13 +6,8 @@ namespace Fasteraune.SO.Instances.Events
     [Serializable]
     public abstract class EventReference
     {
-        public enum ReferenceType
-        {
-            SharedReference,
-            InstancedReference
-        }
-        
-        public ReferenceType Type = ReferenceType.SharedReference;
+
+        public ReferenceType Type = ReferenceType.Shared;
         public InstanceOwner Connection;
     }
 
@@ -29,7 +24,7 @@ namespace Fasteraune.SO.Instances.Events
                 if (instancedEvent == null)
                 {
                     var connection = Connection.Parent ? Connection.Parent : Connection;
-                    instancedEvent = Event.GetOrCreateInstancedVariable(connection);
+                    instancedEvent = Event.GetOrCreateInstance(connection) as Event<TEventType>;
                 }
 
                 return instancedEvent;
@@ -40,7 +35,7 @@ namespace Fasteraune.SO.Instances.Events
         {
             switch (Type)
             {
-                case ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (VariableReferenceMissing())
                     {
@@ -51,7 +46,7 @@ namespace Fasteraune.SO.Instances.Events
                     return;
                 }
 
-                case ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (VariableReferenceMissing() || ConnectionReferenceMissing())
                     {
@@ -72,7 +67,7 @@ namespace Fasteraune.SO.Instances.Events
         {
             switch (Type)
             {
-                case ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (VariableReferenceMissing())
                     {
@@ -83,7 +78,7 @@ namespace Fasteraune.SO.Instances.Events
                     break;
                 }
 
-                case ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (VariableReferenceMissing() || ConnectionReferenceMissing())
                     {
@@ -103,7 +98,7 @@ namespace Fasteraune.SO.Instances.Events
         {
             switch (Type)
             {
-                case ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (VariableReferenceMissing())
                     {
@@ -114,7 +109,7 @@ namespace Fasteraune.SO.Instances.Events
                     break;
                 }
 
-                case ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (VariableReferenceMissing() || ConnectionReferenceMissing())
                     {

@@ -28,8 +28,8 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var first = new FloatVariableReference();
             var second = new FloatVariableReference();
 
-            first.Type = VariableReference.ReferenceType.ConstantValue;
-            second.Type = VariableReference.ReferenceType.ConstantValue;
+            first.Type = ReferenceType.Constant;
+            second.Type = ReferenceType.Constant;
 
             Clamped_Reference_Clamps(first, second, clamped);
         }
@@ -48,8 +48,8 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             first.Variable = firstVariable;
             second.Variable = secondVariable;
 
-            first.Type = VariableReference.ReferenceType.SharedReference;
-            second.Type = VariableReference.ReferenceType.SharedReference;
+            first.Type = ReferenceType.Shared;
+            second.Type = ReferenceType.Shared;
 
             Clamped_Reference_Clamps(first, second, clamped);
         }
@@ -73,8 +73,8 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             first.Variable = firstVariable;
             second.Variable = secondVariable;
 
-            first.Type = VariableReference.ReferenceType.InstancedReference;
-            second.Type = VariableReference.ReferenceType.InstancedReference;
+            first.Type = ReferenceType.Instanced;
+            second.Type = ReferenceType.Instanced;
 
             Clamped_Reference_Clamps(first, second, clamped);
         }
@@ -98,8 +98,8 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             first.Variable = firstVariable;
             second.Variable = secondVariable;
 
-            first.Type = VariableReference.ReferenceType.InstancedReference;
-            second.Type = VariableReference.ReferenceType.InstancedReference;
+            first.Type = ReferenceType.Instanced;
+            second.Type = ReferenceType.Instanced;
 
             first.Value = a;
             second.Value = b;
