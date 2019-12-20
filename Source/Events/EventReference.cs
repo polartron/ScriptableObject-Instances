@@ -6,23 +6,22 @@ namespace Fasteraune.SO.Instances.Events
     [Serializable]
     public abstract class EventReference
     {
-    }
-
-    public enum ReferenceType
-    {
-        SharedReference,
-        InstancedReference
+        public enum ReferenceType
+        {
+            SharedReference,
+            InstancedReference
+        }
+        
+        public ReferenceType Type = ReferenceType.SharedReference;
+        public InstanceOwner Connection;
     }
 
     [Serializable]
     public class EventReference<TEventType, TEvent> : EventReference where TEvent : Event<TEventType>
     {
-        public ReferenceType Type = ReferenceType.SharedReference;
         public TEvent Event;
-        public InstanceOwner Connection;
-        
-        private Event<TEventType> instancedEvent;
 
+        private Event<TEventType> instancedEvent;
         private Event<TEventType> InstancedEvent
         {
             get

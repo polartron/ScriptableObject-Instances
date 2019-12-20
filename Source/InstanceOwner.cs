@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Fasteraune.SO.Instances.Events;
 using Fasteraune.SO.Instances.Variables;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ namespace Fasteraune.SO.Instances
             return true;
         }
 
-        public VariableReference<TVariableType, TVariable> GetReferenceTo<TVariableType, TVariable>(TVariable variable) where TVariable : Variable<TVariableType>
+        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variable) where TVariable : Variable<TVariableType>
         {
             if (variable.GetInstancedVariable(this) == null)
             {
@@ -56,7 +57,21 @@ namespace Fasteraune.SO.Instances
             {
                 Connection = this,
                 Variable = variable,
-                Type = ReferenceType.InstancedReference
+                Type = VariableReference.ReferenceType.InstancedReference
+            };
+        }
+        
+        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) where TEvent : Event<TEventType>
+        {
+            if (eventObject.GetInstancedVariable(this) == null)
+            {
+                return null;
+            }
+            
+            return new EventReference<TEventType, TEvent>()
+            {
+                Connection = this,
+                Type = EventReference.ReferenceType.InstancedReference
             };
         }
     }

@@ -13,7 +13,7 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.ConstantValue;
+            floatReference.Type = VariableReference.ReferenceType.ConstantValue;
             floatReference.Variable = floatVariableObject;
 
             var changedValue = 0f;
@@ -32,7 +32,7 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
 
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.SharedReference;
+            floatReference.Type = VariableReference.ReferenceType.SharedReference;
             floatReference.Variable = floatVariableObject;
 
             var changedValue = 0f;
@@ -51,7 +51,7 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.InstancedReference;
+            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
             floatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
@@ -74,11 +74,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.SharedReference;
+            floatReference.Type = VariableReference.ReferenceType.SharedReference;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.SharedReference;
+            secondFloatReference.Type = VariableReference.ReferenceType.SharedReference;
             secondFloatReference.Variable = floatVariableObject;
 
             floatReference.Value = 10f;
@@ -93,11 +93,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.InstancedReference;
+            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.InstancedReference;
+            secondFloatReference.Type = VariableReference.ReferenceType.InstancedReference;
             secondFloatReference.Variable = floatVariableObject;
 
             Debug.Log("---IGNORE ERROR MESSAGES BELOW---");
@@ -112,10 +112,10 @@ namespace Fasteraune.SO.Instances.Variables.Tests
         public void Instanced_Variable_Error_On_Missing_Variable()
         {
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.InstancedReference;
+            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.InstancedReference;
+            secondFloatReference.Type = VariableReference.ReferenceType.InstancedReference;
 
             Debug.Log("---IGNORE ERROR MESSAGES BELOW---");
             floatReference.Value = 10f;
@@ -131,11 +131,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.InstancedReference;
+            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.SharedReference;
+            secondFloatReference.Type = VariableReference.ReferenceType.SharedReference;
             secondFloatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
@@ -157,11 +157,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = ReferenceType.InstancedReference;
+            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.InstancedReference;
+            secondFloatReference.Type = VariableReference.ReferenceType.InstancedReference;
             secondFloatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();

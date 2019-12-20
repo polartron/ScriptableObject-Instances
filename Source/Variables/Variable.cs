@@ -70,6 +70,11 @@ namespace Fasteraune.SO.Instances.Variables
         {
             if (instances.ContainsKey(connection))
             {
+                if (Base != null)
+                {
+                    return Base.GetInstancedVariable(connection);
+                }
+                
                 return instances[connection] as Variable<T>;
             }
 

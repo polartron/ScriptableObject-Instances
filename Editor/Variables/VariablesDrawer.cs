@@ -98,19 +98,19 @@ namespace Fasteraune.SO.Instances.Variables.Editor
             var variableProperty = property.FindPropertyRelative("Variable");
             var connection = property.FindPropertyRelative("Connection");
 
-            var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
+            var referenceTypeEnum = (VariableReference.ReferenceType) referenceType.enumValueIndex;
             var instancedVariableOwner = connection.objectReferenceValue as InstanceOwner;
             var variable = variableProperty.objectReferenceValue as Variable;
 
             switch (referenceTypeEnum)
             {
-                case ReferenceType.ConstantValue:
+                case VariableReference.ReferenceType.ConstantValue:
                     label.text += " (Constant)";
                     break;
-                case ReferenceType.SharedReference:
+                case VariableReference.ReferenceType.SharedReference:
                     label.text += " (Shared)";
                     break;
-                case ReferenceType.InstancedReference:
+                case VariableReference.ReferenceType.InstancedReference:
                     label.text += " (Instanced)";
                     break;
             }
@@ -140,7 +140,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
 
             switch (referenceTypeEnum)
             {
-                case ReferenceType.InstancedReference:
+                case VariableReference.ReferenceType.InstancedReference:
                 {
                     if (!Application.isPlaying)
                     {
@@ -191,7 +191,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
                     break;
                 }
 
-                case ReferenceType.SharedReference:
+                case VariableReference.ReferenceType.SharedReference:
                 {
                     if (!Application.isPlaying)
                     {
@@ -218,7 +218,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
                     break;
                 }
 
-                case ReferenceType.ConstantValue:
+                case VariableReference.ReferenceType.ConstantValue:
                 {
                     DrawProperty(position, constantValue);
                     break;
@@ -262,15 +262,15 @@ namespace Fasteraune.SO.Instances.Variables.Editor
             var constantValue = property.FindPropertyRelative("ConstantValue");
             var variableProperty = property.FindPropertyRelative("Variable");
 
-            var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
+            var referenceTypeEnum = (VariableReference.ReferenceType) referenceType.enumValueIndex;
 
             switch (referenceTypeEnum)
             {
-                case ReferenceType.ConstantValue:
+                case VariableReference.ReferenceType.ConstantValue:
                     return constantValue;
 
-                case ReferenceType.SharedReference:
-                case ReferenceType.InstancedReference:
+                case VariableReference.ReferenceType.SharedReference:
+                case VariableReference.ReferenceType.InstancedReference:
                     var variable = variableProperty.objectReferenceValue as Variable;
 
                     if (variable == null)

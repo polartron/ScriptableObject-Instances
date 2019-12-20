@@ -36,14 +36,14 @@ namespace Fasteraune.SO.Instances.Events.Editor
             var variableProperty = property.FindPropertyRelative("Event");
             var connection = property.FindPropertyRelative("Connection");
 
-            var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
+            var referenceTypeEnum = (EventReference.ReferenceType) referenceType.enumValueIndex;
 
             switch (referenceTypeEnum)
             {
-                case ReferenceType.SharedReference:
+                case EventReference.ReferenceType.SharedReference:
                     label.text += " (Shared)";
                     break;
-                case ReferenceType.InstancedReference:
+                case EventReference.ReferenceType.InstancedReference:
                     label.text += " (Instanced)";
                     break;
             }
@@ -71,7 +71,7 @@ namespace Fasteraune.SO.Instances.Events.Editor
 
             switch (referenceTypeEnum)
             {
-                case ReferenceType.InstancedReference:
+                case EventReference.ReferenceType.InstancedReference:
                 {
                     if (!Application.isPlaying)
                     {
@@ -118,7 +118,7 @@ namespace Fasteraune.SO.Instances.Events.Editor
                     break;
                 }
 
-                case ReferenceType.SharedReference:
+                case EventReference.ReferenceType.SharedReference:
                 {
                     if (!Application.isPlaying)
                     {

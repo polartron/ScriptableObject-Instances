@@ -14,7 +14,7 @@ namespace Fasteraune.SO.Instances.Events.Tests
             var floatEvent = ScriptableObject.CreateInstance(typeof(FloatEvent)) as FloatEvent;
             
             var floatEventReference = new FloatEventReference();
-            floatEventReference.Type = ReferenceType.SharedReference;
+            floatEventReference.Type = EventReference.ReferenceType.SharedReference;
             floatEventReference.Event = floatEvent;
 
             bool pass = false;
@@ -38,7 +38,7 @@ namespace Fasteraune.SO.Instances.Events.Tests
             var floatEvent = ScriptableObject.CreateInstance(typeof(FloatEvent)) as FloatEvent;
             
             var floatEventReference = new FloatEventReference();
-            floatEventReference.Type = ReferenceType.InstancedReference;
+            floatEventReference.Type = EventReference.ReferenceType.InstancedReference;
             floatEventReference.Event = floatEvent;
 
             var gameObject = new GameObject();
@@ -66,7 +66,7 @@ namespace Fasteraune.SO.Instances.Events.Tests
             var floatEvent = ScriptableObject.CreateInstance(typeof(FloatEvent)) as FloatEvent;
             
             var floatEventReference = new FloatEventReference();
-            floatEventReference.Type = ReferenceType.InstancedReference;
+            floatEventReference.Type = EventReference.ReferenceType.InstancedReference;
             floatEventReference.Event = floatEvent;
 
             var firstGameObject = new GameObject();
@@ -74,7 +74,7 @@ namespace Fasteraune.SO.Instances.Events.Tests
             floatEventReference.Connection = firstInstancedVariableOwner;
 
             var secondEventReference = new FloatEventReference();
-            secondEventReference.Type = ReferenceType.InstancedReference;
+            secondEventReference.Type = EventReference.ReferenceType.InstancedReference;
             secondEventReference.Event = floatEvent;
             
             var secondGameObject = new GameObject();

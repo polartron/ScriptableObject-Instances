@@ -6,22 +6,23 @@ namespace Fasteraune.SO.Instances.Variables
     [Serializable]
     public abstract class VariableReference
     {
-    }
-
-    public enum ReferenceType
-    {
-        ConstantValue,
-        SharedReference,
-        InstancedReference
+        public enum ReferenceType
+        {
+            ConstantValue,
+            SharedReference,
+            InstancedReference
+        }
+        
+        public ReferenceType Type = ReferenceType.ConstantValue;
+        public InstanceOwner Connection;
     }
 
     [Serializable]
     public class VariableReference<TVariableType, TVariable> : VariableReference, IDisposable where TVariable : Variable<TVariableType>
     {
-        public ReferenceType Type = ReferenceType.ConstantValue;
         public TVariableType ConstantValue;
         public TVariable Variable;
-        public InstanceOwner Connection;
+
         private event Action<TVariableType> OnConstantValueChanged;
         private Variable<TVariableType> instancedVariable;
 

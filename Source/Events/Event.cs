@@ -37,5 +37,16 @@ namespace Fasteraune.SO.Instances.Events
         {
             OnEvent?.Invoke(value);
         }
+        
+        internal Event<T> GetInstancedVariable(InstanceOwner connection)
+        {
+            if (instances.ContainsKey(connection))
+            {
+
+                return instances[connection] as Event<T>;
+            }
+
+            return null;
+        }
     }
 }
