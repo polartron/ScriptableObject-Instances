@@ -18,11 +18,6 @@ namespace Fasteraune.SO.Instances.Variables
             return null;
         }
 
-        public virtual SerializedObject GetInitialValueWrapper()
-        {
-            return null;
-        }
-
         public virtual void ApplyModifiedValue(SerializedObject serializedObject)
         {
         }

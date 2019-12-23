@@ -19,7 +19,7 @@ namespace Fasteraune.SO.Instances
             connectedScriptableObjects.Add(scriptableObject);
         }
         
-        internal void DeRegister(ScriptableObjectBase scriptableObject)
+        internal void UnRegister(ScriptableObjectBase scriptableObject)
         {
             connectedScriptableObjects.Remove(scriptableObject);
         }

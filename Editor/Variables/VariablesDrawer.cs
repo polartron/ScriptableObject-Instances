@@ -119,7 +119,6 @@ namespace Fasteraune.SO.Instances.Variables.Editor
             label = EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, label);
 
-            //EditorGUI.HelpBox(position, "", MessageType.Info);
             GUI.Label(original, backgroundTexture, EditorStyles.helpBox);
             position.size = new Vector2(position.size.x, EditorGUIUtility.singleLineHeight);
 

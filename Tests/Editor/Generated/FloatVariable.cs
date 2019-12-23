@@ -22,17 +22,6 @@ namespace Generated.Variables
             cachedProxy.ProxyValue = Value;
             return new SerializedObject(cachedProxy);
         }
-        
-        public override SerializedObject GetInitialValueWrapper()
-        {
-            if (cachedProxy == null)
-            {
-                cachedProxy = CreateInstance(typeof(FloatVariableProxy)) as FloatVariableProxy;
-            }
-            
-            cachedProxy.ProxyValue = InitialValue;
-            return new SerializedObject(cachedProxy);
-        }
 
         public override void ApplyModifiedValue(SerializedObject serializedObject)
         {
