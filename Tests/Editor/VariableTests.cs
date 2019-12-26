@@ -5,6 +5,7 @@ using UnityEngine.TestTools;
 
 namespace Fasteraune.SO.Instances.Variables.Tests
 {
+
     public class VariableTests
     {
         [Test]
@@ -96,16 +97,10 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             floatReference.Type = ReferenceType.Instanced;
             floatReference.Variable = floatVariableObject;
 
-            var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.Instanced;
-            secondFloatReference.Variable = floatVariableObject;
-
-            Debug.Log("---IGNORE ERROR MESSAGES BELOW---");
             floatReference.Value = 10f;
             LogAssert.Expect(LogType.Error, "Missing reference to InstancedVariableOwner script");
-            secondFloatReference.Value = 10f;
-            LogAssert.Expect(LogType.Error, "Missing reference to InstancedVariableOwner script");
-            Debug.Log("---IGNORE ERROR MESSAGES ABOVE---");
+            
+            Debug.ClearDeveloperConsole();
         }
 
         [Test]
@@ -114,15 +109,10 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatReference = new FloatVariableReference();
             floatReference.Type = ReferenceType.Instanced;
 
-            var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = ReferenceType.Instanced;
-
-            Debug.Log("---IGNORE ERROR MESSAGES BELOW---");
             floatReference.Value = 10f;
             LogAssert.Expect(LogType.Error, "Missing reference to variable asset");
-            secondFloatReference.Value = 10f;
-            LogAssert.Expect(LogType.Error, "Missing reference to variable asset");
-            Debug.Log("---IGNORE ERROR MESSAGES ABOVE---");
+            
+            Debug.ClearDeveloperConsole();
         }
 
         [Test]

@@ -9,11 +9,6 @@ namespace Fasteraune.SO.Instances
     {
         internal Dictionary<InstanceOwner, ScriptableObjectBase> instances = new Dictionary<InstanceOwner, ScriptableObjectBase>();
 
-        internal void ClearConnection(InstanceOwner connection)
-        {
-            instances.Remove(connection);
-        }
-
         internal virtual ScriptableObjectBase GetOrCreateInstance(InstanceOwner connection)
         {
             if (instances.ContainsKey(connection))
@@ -49,7 +44,7 @@ namespace Fasteraune.SO.Instances
         {
             if (instances.ContainsKey(connection))
             {
-                ClearConnection(connection);
+                instances.Remove(connection);
             }
         }
     }

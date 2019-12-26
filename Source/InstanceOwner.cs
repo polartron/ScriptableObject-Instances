@@ -18,11 +18,6 @@ namespace Fasteraune.SO.Instances
         {
             connectedScriptableObjects.Add(scriptableObject);
         }
-        
-        internal void UnRegister(ScriptableObjectBase scriptableObject)
-        {
-            connectedScriptableObjects.Remove(scriptableObject);
-        }
 
         private void Awake()
         {
@@ -43,12 +38,13 @@ namespace Fasteraune.SO.Instances
             {
                 if (scriptableObject != null)
                 {
-                    scriptableObject.ClearConnection(this);
+                    scriptableObject.RemoveInstance(this);
                 }
             }
         }
 
-        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variable) where TVariable : Variable<TVariableType>
+        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variable) 
+            where TVariable : Variable<TVariableType>
         {
             if (variable.GetInstance(this) == null)
             {
@@ -63,7 +59,8 @@ namespace Fasteraune.SO.Instances
             };
         }
         
-        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) where TEvent : Event<TEventType>
+        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) 
+            where TEvent : Event<TEventType>
         {
             if (eventObject.GetInstance(this) == null)
             {
@@ -89,6 +86,7 @@ namespace Fasteraune.SO.Instances
         
         public void RemoveInstance(ScriptableObjectBase scriptableObjectBase)
         {
+            connectedScriptableObjects.Remove(scriptableObjectBase);
             scriptableObjectBase.RemoveInstance(this);
         }
     }

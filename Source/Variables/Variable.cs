@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -81,11 +80,7 @@ namespace Fasteraune.SO.Instances.Variables
             set
             {
                 RuntimeValue = value;
-
-                if (OnValueChanged != null)
-                {
-                    OnValueChanged.Invoke(value);
-                }
+                OnValueChanged?.Invoke(value);
             }
         }
 

@@ -12,7 +12,8 @@ namespace Fasteraune.SO.Instances.Events
     }
 
     [Serializable]
-    public class EventReference<TEventType, TEvent> : EventReference where TEvent : Event<TEventType>
+    public class EventReference<TEventType, TEvent> : EventReference 
+        where TEvent : Event<TEventType>
     {
         public TEvent Event;
 
