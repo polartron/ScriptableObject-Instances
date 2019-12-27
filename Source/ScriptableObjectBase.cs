@@ -8,6 +8,9 @@ namespace Fasteraune.SO.Instances
     public class ScriptableObjectBase : ScriptableObject
     {
         internal Dictionary<InstanceOwner, ScriptableObjectBase> instances = new Dictionary<InstanceOwner, ScriptableObjectBase>();
+        private List<InstanceOwner> owners = new List<InstanceOwner>();
+        
+        public IEnumerator<InstanceOwner> Owners => owners.GetEnumerator();
 
         internal virtual ScriptableObjectBase GetOrCreateInstance(InstanceOwner connection)
         {
@@ -25,6 +28,7 @@ namespace Fasteraune.SO.Instances
             }
 
             instances.Add(connection, instance);
+            owners.Add(connection);
             connection.Register(instance);
             
             return instances[connection];
@@ -45,7 +49,10 @@ namespace Fasteraune.SO.Instances
             if (instances.ContainsKey(connection))
             {
                 instances.Remove(connection);
+                owners.Remove(connection);
             }
         }
+
+
     }
 }

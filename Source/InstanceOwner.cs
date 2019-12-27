@@ -9,8 +9,7 @@ namespace Fasteraune.SO.Instances
     public class InstanceOwner : MonoBehaviour
     {
         public InstanceOwner Parent;
-        public Variable[] LocalVariableOverrides;
-        public Tag[] Tags;
+        public ScriptableObjectBase[] InitialObjects;
 
         private List<ScriptableObjectBase> connectedScriptableObjects = new List<ScriptableObjectBase>();
 
@@ -21,14 +20,9 @@ namespace Fasteraune.SO.Instances
 
         private void Awake()
         {
-            foreach (var localVariableOverride in LocalVariableOverrides)
+            foreach (var initialObject in InitialObjects)
             {
-                localVariableOverride.GetOrCreateInstance(this);
-            }
-
-            foreach (var tag in Tags)
-            {
-                tag.GetOrCreateInstance(this);
+                initialObject.GetOrCreateInstance(this);
             }
         }
 
@@ -59,10 +53,10 @@ namespace Fasteraune.SO.Instances
             };
         }
         
-        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) 
+        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent @event) 
             where TEvent : Event<TEventType>
         {
-            if (eventObject.GetInstance(this) == null)
+            if (@event.GetInstance(this) == null)
             {
                 return null;
             }
