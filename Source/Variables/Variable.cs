@@ -84,6 +84,14 @@ namespace Fasteraune.SO.Instances.Variables
             }
         }
 
+        /// <summary>
+        /// Call this function after changing a value inside of a reference type if you'd like to broadcast a change
+        /// </summary>
+        public void TriggerValueChanged()
+        {
+            OnValueChanged?.Invoke(RuntimeValue);
+        }
+
         public void OnAfterDeserialize()
         {
             RuntimeValue = InitialValue;
