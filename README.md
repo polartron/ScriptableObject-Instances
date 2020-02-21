@@ -2,6 +2,11 @@
 Based on the Unite Austin 2017 talk by Ryan Hipple.
 https://www.youtube.com/watch?v=raQ3iHhE_Kk
 
+# WIP
+- Code refactoring and cleanup.
+- Example code.
+- Tags
+
 ## Description
 ScriptableObject-Instances allows you to have runtime variables and events tied to unique instances of your prefabs. This is an extension built upon the original implementation by Ryan Hipple where you could only have shared global ScriptableObjects at the project level.
 
@@ -27,10 +32,6 @@ ScriptableObject-Instances allows you to have runtime variables and events tied 
 - Add the following to your **manifest.json** file in your **Packages** folder 
 > "com.fasteraune.scriptableobjectinstances": "file:com.fasteraune.scriptableobjectinstances"
 - Follow the https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html workflow and add a reference to **Fasteraune.SO.Instances.asmdef**
-
-## Usage
-
-A complete example can be found in the Example folder
 
 ## Code Generation Example
 
