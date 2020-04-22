@@ -37,10 +37,10 @@ namespace Fasteraune.SO.Instances
             }
         }
 
-        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variable) 
+        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variableObject) 
             where TVariable : Variable<TVariableType>
         {
-            if (variable.GetInstance(this) == null)
+            if (variableObject.GetInstance(this) == null)
             {
                 return null;
             }
@@ -48,15 +48,15 @@ namespace Fasteraune.SO.Instances
             return new VariableReference<TVariableType, TVariable>()
             {
                 Connection = this,
-                Variable = variable,
+                Variable = variableObject,
                 Type = ReferenceType.Instanced
             };
         }
         
-        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent @event) 
+        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) 
             where TEvent : Event<TEventType>
         {
-            if (@event.GetInstance(this) == null)
+            if (eventObject.GetInstance(this) == null)
             {
                 return null;
             }
@@ -68,20 +68,20 @@ namespace Fasteraune.SO.Instances
             };
         }
 
-        public bool HasInstance(ScriptableObjectBase scriptableObjectBase)
+        public bool HasInstance(ScriptableObjectBase baseObject)
         {
-            return scriptableObjectBase.GetInstance(this) != null;
+            return baseObject.GetInstance(this) != null;
         }
         
-        public void AddInstance(ScriptableObjectBase scriptableObjectBase)
+        public void AddInstance(ScriptableObjectBase baseObject)
         {
-            scriptableObjectBase.GetOrCreateInstance(this);
+            baseObject.GetOrCreateInstance(this);
         }
         
-        public void RemoveInstance(ScriptableObjectBase scriptableObjectBase)
+        public void RemoveInstance(ScriptableObjectBase baseObject)
         {
-            connectedScriptableObjects.Remove(scriptableObjectBase);
-            scriptableObjectBase.RemoveInstance(this);
+            connectedScriptableObjects.Remove(baseObject);
+            baseObject.RemoveInstance(this);
         }
     }
 }
