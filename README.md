@@ -38,35 +38,23 @@ ScriptableObject-Instances allows you to have runtime variables and events tied 
 The following is an example of an editor script you can add to your own project in order to generate the files you need. 
 
 ```
-using System;
 using System.IO;
 using Fasteraune.SO.Instances.Editor;
 using UnityEditor;
 using UnityEngine;
 
-public class VariableGenerator
+public class ScriptableObjectGenerator
 {
-    [MenuItem("Assets/Variables/Generate")]
+    [MenuItem("Assets/Scriptable Objects/Generate")]
     static void Generate()
     {
-        Type[] generateTypes =
-        {
-            typeof(float),
-            typeof(int),
-            typeof(bool),
-            typeof(string),
-            
-            typeof(Transform),
-            typeof(Vector3),
-            typeof(GameObject),
-            typeof(AudioSource),
-            typeof(AudioClip),
-            typeof(Rigidbody)
-        };
-
         string path = Path.Combine(Application.dataPath, "Scripts/Generated/");
-
-        ScriptGenerator.GenerateScripts(generateTypes, path);
+        
+        var generator = new ScriptGenerator(path);
+        generator.Add(typeof(float));
+        generator.Add(typeof(int));
+        generator.Generate();
     }
 }
+
 ```
