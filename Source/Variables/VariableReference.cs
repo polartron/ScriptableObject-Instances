@@ -6,14 +6,8 @@ namespace Fasteraune.SO.Instances.Variables
     [Serializable]
     public abstract class VariableReference
     {
-        public enum ReferenceType
-        {
-            ConstantValue,
-            SharedReference,
-            InstancedReference
-        }
-        
-        public ReferenceType Type = ReferenceType.ConstantValue;
+
+        public ReferenceType Type = ReferenceType.Constant;
         public InstanceOwner Connection;
     }
 
@@ -33,7 +27,7 @@ namespace Fasteraune.SO.Instances.Variables
                 if (instancedVariable == null)
                 {
                     var connection = Connection.Parent ? Connection.Parent : Connection;
-                    instancedVariable = Variable.GetOrCreateInstancedVariable(connection) as Variable<TVariableType>;
+                    instancedVariable = Variable.GetOrCreateInstance(connection) as Variable<TVariableType>;
                 }
 
                 return instancedVariable;
@@ -63,12 +57,12 @@ namespace Fasteraune.SO.Instances.Variables
             {
                 switch (Type)
                 {
-                    case ReferenceType.ConstantValue:
+                    case ReferenceType.Constant:
                     {
                         return ConstantValue;
                     }
 
-                    case ReferenceType.SharedReference:
+                    case ReferenceType.Shared:
                     {
                         if (caching)
                         {
@@ -83,7 +77,7 @@ namespace Fasteraune.SO.Instances.Variables
                         return Variable.Value;
                     }
 
-                    case ReferenceType.InstancedReference:
+                    case ReferenceType.Instanced:
                     {
                         if (VariableReferenceMissing() || ConnectionReferenceMissing())
                         {
@@ -107,7 +101,7 @@ namespace Fasteraune.SO.Instances.Variables
             {
                 switch (Type)
                 {
-                    case ReferenceType.ConstantValue:
+                    case ReferenceType.Constant:
                     {
                         ConstantValue = value;
 
@@ -116,7 +110,7 @@ namespace Fasteraune.SO.Instances.Variables
                         break;
                     }
 
-                    case ReferenceType.SharedReference:
+                    case ReferenceType.Shared:
                     {
                         if (VariableReferenceMissing())
                         {
@@ -128,7 +122,7 @@ namespace Fasteraune.SO.Instances.Variables
                         break;
                     }
 
-                    case ReferenceType.InstancedReference:
+                    case ReferenceType.Instanced:
                     {
                         if (VariableReferenceMissing() || ConnectionReferenceMissing())
                         {
@@ -150,13 +144,13 @@ namespace Fasteraune.SO.Instances.Variables
         {
             switch (Type)
             {
-                case ReferenceType.ConstantValue:
+                case ReferenceType.Constant:
                 {
                     OnConstantValueChanged += listener;
                     break;
                 }
 
-                case ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (VariableReferenceMissing())
                     {
@@ -167,7 +161,7 @@ namespace Fasteraune.SO.Instances.Variables
                     break;
                 }
 
-                case ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (VariableReferenceMissing() || ConnectionReferenceMissing())
                     {
@@ -187,13 +181,13 @@ namespace Fasteraune.SO.Instances.Variables
         {
             switch (Type)
             {
-                case ReferenceType.ConstantValue:
+                case ReferenceType.Constant:
                 {
                     OnConstantValueChanged -= listener;
                     break;
                 }
 
-                case ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (VariableReferenceMissing())
                     {
@@ -204,7 +198,7 @@ namespace Fasteraune.SO.Instances.Variables
                     break;
                 }
 
-                case ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (VariableReferenceMissing() || ConnectionReferenceMissing())
                     {
@@ -246,10 +240,10 @@ namespace Fasteraune.SO.Instances.Variables
         {
             switch (Type)
             {
-                case ReferenceType.ConstantValue:
+                case ReferenceType.Constant:
                     return;
                 
-                case ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (VariableReferenceMissing())
                     {
@@ -261,7 +255,7 @@ namespace Fasteraune.SO.Instances.Variables
                     break;
                 }
 
-                case ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (VariableReferenceMissing() || ConnectionReferenceMissing())
                     {
@@ -291,10 +285,10 @@ namespace Fasteraune.SO.Instances.Variables
             {
                 switch (Type)
                 {
-                    case ReferenceType.ConstantValue:
+                    case ReferenceType.Constant:
                         return;
                     
-                    case ReferenceType.SharedReference:
+                    case ReferenceType.Shared:
                     {
                         if (VariableReferenceMissing())
                         {
@@ -305,7 +299,7 @@ namespace Fasteraune.SO.Instances.Variables
                         break;
                     }
     
-                    case ReferenceType.InstancedReference:
+                    case ReferenceType.Instanced:
                     {
                         if (VariableReferenceMissing() || ConnectionReferenceMissing())
                         {

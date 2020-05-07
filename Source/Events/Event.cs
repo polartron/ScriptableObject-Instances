@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Fasteraune.SO.Instances.Events
 {
     [Serializable]
-    public abstract class Event : ScriptableObjectBase
+    public class Event : ScriptableObjectBase
     {
     }
 
@@ -13,40 +13,9 @@ namespace Fasteraune.SO.Instances.Events
     {
         public event Action<T> OnEvent;
 
-        public Event<T> GetOrCreateInstancedVariable(InstanceOwner connection)
-        {
-            if (instances.ContainsKey(connection))
-            {
-                return instances[connection] as Event<T>;
-            }
-
-            var instance = CreateInstance(GetType().Name) as Event<T>;
-
-            if (instance == null)
-            {
-                Debug.LogError("Could not create instance of type " + GetType().Name);
-                return null;
-            }
-
-            instances.Add(connection, instance);
-            connection.Register(instance);
-            return instances[connection] as Event<T>;
-        }
-
         public void Invoke(T value)
         {
             OnEvent?.Invoke(value);
-        }
-        
-        internal Event<T> GetInstancedVariable(InstanceOwner connection)
-        {
-            if (instances.ContainsKey(connection))
-            {
-
-                return instances[connection] as Event<T>;
-            }
-
-            return null;
         }
     }
 }

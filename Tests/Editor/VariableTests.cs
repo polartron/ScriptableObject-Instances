@@ -5,6 +5,7 @@ using UnityEngine.TestTools;
 
 namespace Fasteraune.SO.Instances.Variables.Tests
 {
+
     public class VariableTests
     {
         [Test]
@@ -13,7 +14,7 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.ConstantValue;
+            floatReference.Type = ReferenceType.Constant;
             floatReference.Variable = floatVariableObject;
 
             var changedValue = 0f;
@@ -32,7 +33,7 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
 
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.SharedReference;
+            floatReference.Type = ReferenceType.Shared;
             floatReference.Variable = floatVariableObject;
 
             var changedValue = 0f;
@@ -51,7 +52,7 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
+            floatReference.Type = ReferenceType.Instanced;
             floatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
@@ -74,11 +75,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.SharedReference;
+            floatReference.Type = ReferenceType.Shared;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = VariableReference.ReferenceType.SharedReference;
+            secondFloatReference.Type = ReferenceType.Shared;
             secondFloatReference.Variable = floatVariableObject;
 
             floatReference.Value = 10f;
@@ -93,36 +94,25 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
+            floatReference.Type = ReferenceType.Instanced;
             floatReference.Variable = floatVariableObject;
 
-            var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = VariableReference.ReferenceType.InstancedReference;
-            secondFloatReference.Variable = floatVariableObject;
-
-            Debug.Log("---IGNORE ERROR MESSAGES BELOW---");
             floatReference.Value = 10f;
             LogAssert.Expect(LogType.Error, "Missing reference to InstancedVariableOwner script");
-            secondFloatReference.Value = 10f;
-            LogAssert.Expect(LogType.Error, "Missing reference to InstancedVariableOwner script");
-            Debug.Log("---IGNORE ERROR MESSAGES ABOVE---");
+            
+            Debug.ClearDeveloperConsole();
         }
 
         [Test]
         public void Instanced_Variable_Error_On_Missing_Variable()
         {
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
+            floatReference.Type = ReferenceType.Instanced;
 
-            var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = VariableReference.ReferenceType.InstancedReference;
-
-            Debug.Log("---IGNORE ERROR MESSAGES BELOW---");
             floatReference.Value = 10f;
             LogAssert.Expect(LogType.Error, "Missing reference to variable asset");
-            secondFloatReference.Value = 10f;
-            LogAssert.Expect(LogType.Error, "Missing reference to variable asset");
-            Debug.Log("---IGNORE ERROR MESSAGES ABOVE---");
+            
+            Debug.ClearDeveloperConsole();
         }
 
         [Test]
@@ -131,11 +121,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
+            floatReference.Type = ReferenceType.Instanced;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = VariableReference.ReferenceType.SharedReference;
+            secondFloatReference.Type = ReferenceType.Shared;
             secondFloatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();
@@ -157,11 +147,11 @@ namespace Fasteraune.SO.Instances.Variables.Tests
             var floatVariableObject = ScriptableObject.CreateInstance(typeof(FloatVariable)) as FloatVariable;
             
             var floatReference = new FloatVariableReference();
-            floatReference.Type = VariableReference.ReferenceType.InstancedReference;
+            floatReference.Type = ReferenceType.Instanced;
             floatReference.Variable = floatVariableObject;
 
             var secondFloatReference = new FloatVariableReference();
-            secondFloatReference.Type = VariableReference.ReferenceType.InstancedReference;
+            secondFloatReference.Type = ReferenceType.Instanced;
             secondFloatReference.Variable = floatVariableObject;
 
             var gameObject = new GameObject();

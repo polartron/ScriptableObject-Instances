@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace #NAMESPACE#.Variables
 {
-    [CreateAssetMenu(menuName = "Variables/#NAME#")]
+    [CreateAssetMenu(menuName = "Scriptable Objects/Variables/#NAME#", order = 1050)]
     public class #NAME#Variable : Variable<#TYPE#>
     {
 #if UNITY_EDITOR
@@ -20,17 +20,6 @@ namespace #NAMESPACE#.Variables
             }
             
             cachedProxy.ProxyValue = Value;
-            return new SerializedObject(cachedProxy);
-        }
-        
-        public override SerializedObject GetInitialValueWrapper()
-        {
-            if (cachedProxy == null)
-            {
-                cachedProxy = CreateInstance(typeof(#NAME#VariableProxy)) as #NAME#VariableProxy;
-            }
-            
-            cachedProxy.ProxyValue = InitialValue;
             return new SerializedObject(cachedProxy);
         }
 

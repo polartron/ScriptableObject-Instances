@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Fasteraune.SO.Instances.Events;
+using Fasteraune.SO.Instances.Tags;
 using Fasteraune.SO.Instances.Variables;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Fasteraune.SO.Instances
     public class InstanceOwner : MonoBehaviour
     {
         public InstanceOwner Parent;
-        public Variable[] LocalVariableOverrides;
+        public ScriptableObjectBase[] InitialObjects;
 
         private List<ScriptableObjectBase> connectedScriptableObjects = new List<ScriptableObjectBase>();
 
@@ -19,36 +20,27 @@ namespace Fasteraune.SO.Instances
 
         private void Awake()
         {
-            foreach (var localScriptableObject in LocalVariableOverrides)
+            foreach (var initialObject in InitialObjects)
             {
-                localScriptableObject.GetOrCreateInstancedVariable(this);
+                initialObject.GetOrCreateInstance(this);
             }
         }
 
         private void OnDestroy()
         {
-            foreach (var scriptableObjects in connectedScriptableObjects)
+            foreach (var scriptableObject in connectedScriptableObjects)
             {
-                if (scriptableObjects != null)
+                if (scriptableObject != null)
                 {
-                    scriptableObjects.ClearConnection(this);
+                    scriptableObject.RemoveInstance(this);
                 }
             }
         }
 
-        public bool HasInstanceOf(Variable variable)
+        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variableObject) 
+            where TVariable : Variable<TVariableType>
         {
-            if (variable.GetInstancedVariable(this) == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public VariableReference<TVariableType, TVariable> GetReferenceToVariable<TVariableType, TVariable>(TVariable variable) where TVariable : Variable<TVariableType>
-        {
-            if (variable.GetInstancedVariable(this) == null)
+            if (variableObject.GetInstance(this) == null)
             {
                 return null;
             }
@@ -56,14 +48,15 @@ namespace Fasteraune.SO.Instances
             return new VariableReference<TVariableType, TVariable>()
             {
                 Connection = this,
-                Variable = variable,
-                Type = VariableReference.ReferenceType.InstancedReference
+                Variable = variableObject,
+                Type = ReferenceType.Instanced
             };
         }
         
-        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) where TEvent : Event<TEventType>
+        public EventReference<TEventType, TEvent> GetReferenceToEvent<TEventType, TEvent>(TEvent eventObject) 
+            where TEvent : Event<TEventType>
         {
-            if (eventObject.GetInstancedVariable(this) == null)
+            if (eventObject.GetInstance(this) == null)
             {
                 return null;
             }
@@ -71,8 +64,24 @@ namespace Fasteraune.SO.Instances
             return new EventReference<TEventType, TEvent>()
             {
                 Connection = this,
-                Type = EventReference.ReferenceType.InstancedReference
+                Type = ReferenceType.Instanced
             };
+        }
+
+        public bool HasInstance(ScriptableObjectBase baseObject)
+        {
+            return baseObject.GetInstance(this) != null;
+        }
+        
+        public void AddInstance(ScriptableObjectBase baseObject)
+        {
+            baseObject.GetOrCreateInstance(this);
+        }
+        
+        public void RemoveInstance(ScriptableObjectBase baseObject)
+        {
+            connectedScriptableObjects.Remove(baseObject);
+            baseObject.RemoveInstance(this);
         }
     }
 }

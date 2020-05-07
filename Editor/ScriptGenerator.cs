@@ -1,6 +1,8 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Microsoft.CSharp;
 using UnityEditor;
@@ -10,18 +12,106 @@ namespace Fasteraune.SO.Instances.Editor
 {
     public class ScriptGenerator
     {
-        private static void CreateScriptFile(string content, string path, string typeName, string nameSpace,
-            string name,
-            string fileNamePostfix)
+        private List<KeyValuePair<Type, string>> typesWithNames = new List<KeyValuePair<Type, string>>();
+        private string outputPath;
+        private string generatedNamespace;
+
+        public ScriptGenerator(string outputPath, string generatedNamespace = "Generated")
         {
-            using (var fs = File.Create(path + name + fileNamePostfix))
+            this.outputPath = outputPath;
+            this.generatedNamespace = generatedNamespace;
+        }
+
+        public void Add(Type type)
+        {
+            var fullTypeName = GetTypeAliasName(type);
+            var name = UppercaseFirst(fullTypeName);
+            
+            typesWithNames.Add(new KeyValuePair<Type, string>(type, name));
+        }
+        
+        public void Add(Type type, string name)
+        {
+            typesWithNames.Add(new KeyValuePair<Type, string>(type, name));
+        }
+        
+        public void Add(IEnumerable<Type> types)
+        {
+            foreach (var type in types)
+            {
+                var fullTypeName = GetTypeAliasName(type);
+                var name = UppercaseFirst(fullTypeName);
+            
+                typesWithNames.Add(new KeyValuePair<Type, string>(type, name));
+            }
+        }
+
+        public void Add(IEnumerable<KeyValuePair<Type, string>> types)
+        {
+            typesWithNames.AddRange(types);
+        }
+        
+        public void Generate()
+        {
+            if (!Directory.Exists(outputPath))
+            {
+                Directory.CreateDirectory(outputPath);
+            }
+
+            foreach (var file in new DirectoryInfo(outputPath).GetFiles())
+            {
+                if (file.Extension.Equals("meta"))
+                {
+                    continue;
+                }
+
+                if (file.Extension.Equals("cs"))
+                {
+                    file.Delete();
+                }
+            }
+
+            foreach (var generateType in typesWithNames)
+            {
+                var type = generateType.Key;
+                var typeName = GetTypeAliasName(type, true);
+                var name = generateType.Value;
+
+                CreateScriptFile("Variable", typeName, generatedNamespace, name);
+                CreateScriptFile("VariableProxy", typeName, generatedNamespace, name);
+                CreateScriptFile("VariableReference", typeName, generatedNamespace, name);
+
+                if (typeof(IComparable).IsAssignableFrom(type))
+                {
+                    CreateScriptFile("ReferenceClamped", typeName, generatedNamespace, name);
+                }
+
+                if (IsNumericType(type))
+                {
+                    CreateScriptFile("ReferenceExpression", typeName, generatedNamespace, name);
+                }
+                
+                CreateScriptFile("Event", typeName, generatedNamespace, name);
+                CreateScriptFile("EventReference", typeName, generatedNamespace, name);
+                CreateScriptFile("EventInvokable", typeName, generatedNamespace, name);
+            }
+
+            AssetDatabase.Refresh();
+        }
+        
+        private void CreateScriptFile(string template, string typeName, string nameSpace, string name)
+        {
+            string content = GetTemplate(template);
+            string postfix = template + ".cs";
+            
+            using (var fs = File.Create(outputPath + name + postfix))
             {
                 content = content.Replace("#NAMESPACE#", nameSpace);
                 content = content.Replace("#TYPE#", typeName);
                 content = content.Replace("#NAME#", name);
 
-                var info = new UTF8Encoding(true).GetBytes(content);
-                fs.Write(info, 0, info.Length);
+                var bytes = new UTF8Encoding(true).GetBytes(content);
+                fs.Write(bytes, 0, bytes.Length);
             }
         }
 
@@ -38,55 +128,7 @@ namespace Fasteraune.SO.Instances.Editor
                 return null;
             }
 
-
             return asset.text;
-        }
-
-        public static void GenerateScripts(Type[] types, string path, string nameSpace = "Generated")
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            foreach (var file in new DirectoryInfo(path).GetFiles())
-            {
-                if (file.Extension.Contains("meta"))
-                {
-                    continue;
-                }
-
-                file.Delete();
-            }
-
-            foreach (var generateType in types)
-            {
-                var typeName = GetTypeAliasName(generateType, true);
-                var fullTypeName = GetTypeAliasName(generateType);
-                var name = UppercaseFirst(fullTypeName);
-
-                CreateScriptFile(GetTemplate("Variable"), path, typeName, nameSpace, name, "Variable.cs");
-                CreateScriptFile(GetTemplate("VariableProxy"), path, typeName, nameSpace, name, "VariableProxy.cs");
-                CreateScriptFile(GetTemplate("VariableReference"), path, typeName, nameSpace, name, "VariableReference.cs");
-
-                if (typeof(IComparable).IsAssignableFrom(generateType))
-                {
-                    CreateScriptFile(GetTemplate("ReferenceClamped"), path, typeName, nameSpace, name,
-                        "ReferenceClamped.cs");
-                }
-
-                if (IsNumericType(generateType))
-                {
-                    CreateScriptFile(GetTemplate("ReferenceExpression"), path, typeName, nameSpace, name,
-                        "ReferenceExpression.cs");
-                }
-                
-                CreateScriptFile(GetTemplate("Event"), path, typeName, nameSpace, name, "Event.cs");
-                CreateScriptFile(GetTemplate("EventReference"), path, typeName, nameSpace, name, "EventReference.cs");
-                CreateScriptFile(GetTemplate("EventInvokable"), path, typeName, nameSpace, name, "EventInvokable.cs");
-            }
-
-            AssetDatabase.Refresh();
         }
 
         //https://stackoverflow.com/questions/1749966/c-sharp-how-to-determine-whether-a-type-is-a-number/1750093#1750093
@@ -122,7 +164,7 @@ namespace Fasteraune.SO.Instances.Editor
 
             if (!fullName)
             {
-                var index = typeName.LastIndexOf(".");
+                var index = typeName.LastIndexOf(".", StringComparison.Ordinal);
                 return typeName.Substring(index + 1);
             }
 

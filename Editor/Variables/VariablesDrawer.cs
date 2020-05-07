@@ -98,19 +98,19 @@ namespace Fasteraune.SO.Instances.Variables.Editor
             var variableProperty = property.FindPropertyRelative("Variable");
             var connection = property.FindPropertyRelative("Connection");
 
-            var referenceTypeEnum = (VariableReference.ReferenceType) referenceType.enumValueIndex;
+            var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
             var instancedVariableOwner = connection.objectReferenceValue as InstanceOwner;
             var variable = variableProperty.objectReferenceValue as Variable;
 
             switch (referenceTypeEnum)
             {
-                case VariableReference.ReferenceType.ConstantValue:
+                case ReferenceType.Constant:
                     label.text += " (Constant)";
                     break;
-                case VariableReference.ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                     label.text += " (Shared)";
                     break;
-                case VariableReference.ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                     label.text += " (Instanced)";
                     break;
             }
@@ -119,7 +119,6 @@ namespace Fasteraune.SO.Instances.Variables.Editor
             label = EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, label);
 
-            //EditorGUI.HelpBox(position, "", MessageType.Info);
             GUI.Label(original, backgroundTexture, EditorStyles.helpBox);
             position.size = new Vector2(position.size.x, EditorGUIUtility.singleLineHeight);
 
@@ -140,7 +139,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
 
             switch (referenceTypeEnum)
             {
-                case VariableReference.ReferenceType.InstancedReference:
+                case ReferenceType.Instanced:
                 {
                     if (!Application.isPlaying)
                     {
@@ -191,7 +190,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
                     break;
                 }
 
-                case VariableReference.ReferenceType.SharedReference:
+                case ReferenceType.Shared:
                 {
                     if (!Application.isPlaying)
                     {
@@ -218,7 +217,7 @@ namespace Fasteraune.SO.Instances.Variables.Editor
                     break;
                 }
 
-                case VariableReference.ReferenceType.ConstantValue:
+                case ReferenceType.Constant:
                 {
                     DrawProperty(position, constantValue);
                     break;
@@ -262,15 +261,15 @@ namespace Fasteraune.SO.Instances.Variables.Editor
             var constantValue = property.FindPropertyRelative("ConstantValue");
             var variableProperty = property.FindPropertyRelative("Variable");
 
-            var referenceTypeEnum = (VariableReference.ReferenceType) referenceType.enumValueIndex;
+            var referenceTypeEnum = (ReferenceType) referenceType.enumValueIndex;
 
             switch (referenceTypeEnum)
             {
-                case VariableReference.ReferenceType.ConstantValue:
+                case ReferenceType.Constant:
                     return constantValue;
 
-                case VariableReference.ReferenceType.SharedReference:
-                case VariableReference.ReferenceType.InstancedReference:
+                case ReferenceType.Shared:
+                case ReferenceType.Instanced:
                     var variable = variableProperty.objectReferenceValue as Variable;
 
                     if (variable == null)

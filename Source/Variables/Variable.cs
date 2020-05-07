@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,16 +10,9 @@ namespace Fasteraune.SO.Instances.Variables
     [Serializable]
     public abstract class Variable : ScriptableObjectBase
     {
-        internal abstract Variable GetOrCreateInstancedVariable(InstanceOwner connection);
-        internal abstract Variable GetInstancedVariable(InstanceOwner connection);
         
 #if UNITY_EDITOR
         public virtual SerializedObject GetRuntimeValueWrapper()
-        {
-            return null;
-        }
-
-        public virtual SerializedObject GetInitialValueWrapper()
         {
             return null;
         }
@@ -42,7 +34,7 @@ namespace Fasteraune.SO.Instances.Variables
 
         public event Action<T> OnValueChanged;
 
-        internal override Variable GetOrCreateInstancedVariable(InstanceOwner connection)
+        internal override ScriptableObjectBase GetOrCreateInstance(InstanceOwner connection)
         {
             if (instances.ContainsKey(connection))
             {
@@ -50,7 +42,7 @@ namespace Fasteraune.SO.Instances.Variables
             }
 
             Variable<T> instance = (Base != null)
-                ? Base.GetOrCreateInstancedVariable(connection) as Variable<T>
+                ? Base.GetOrCreateInstance(connection) as Variable<T>
                 : CreateInstance(GetType().Name) as Variable<T>;
 
             if (instance == null)
@@ -63,16 +55,17 @@ namespace Fasteraune.SO.Instances.Variables
             instance.RuntimeValue = InitialValue;
             instances.Add(connection, instance);
             connection.Register(instance);
-            return instances[connection] as Variable<T>;
+            
+            return instances[connection];
         }
 
-        internal override Variable GetInstancedVariable(InstanceOwner connection)
+        internal override ScriptableObjectBase GetInstance(InstanceOwner connection)
         {
             if (instances.ContainsKey(connection))
             {
                 if (Base != null)
                 {
-                    return Base.GetInstancedVariable(connection);
+                    return Base.GetInstance(connection);
                 }
                 
                 return instances[connection] as Variable<T>;
@@ -81,23 +74,22 @@ namespace Fasteraune.SO.Instances.Variables
             return null;
         }
 
-        protected virtual T InternalValue
-        {
-            get { return RuntimeValue; }
-        }
-
         public T Value
         {
             get { return RuntimeValue; }
             set
             {
                 RuntimeValue = value;
-
-                if (OnValueChanged != null)
-                {
-                    OnValueChanged.Invoke(value);
-                }
+                OnValueChanged?.Invoke(value);
             }
+        }
+
+        /// <summary>
+        /// Call this function after changing a value inside of a reference type if you'd like to broadcast a change
+        /// </summary>
+        public void TriggerValueChanged()
+        {
+            OnValueChanged?.Invoke(RuntimeValue);
         }
 
         public void OnAfterDeserialize()
