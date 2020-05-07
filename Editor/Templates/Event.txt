@@ -3,7 +3,7 @@ using Fasteraune.SO.Instances.Events;
 
 namespace #NAMESPACE#.Events
 {
-    [CreateAssetMenu(menuName = "Event/#NAME#")]
+    [CreateAssetMenu(menuName = "Scriptable Objects/Event/#NAME#", order = 1050)]
     public class #NAME#Event : Event<#TYPE#>
     {
     }
