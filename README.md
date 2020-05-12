@@ -11,17 +11,14 @@ ScriptableObject-Instances allows you to have runtime variables and events tied 
 ![Example Flow](https://i.imgur.com/OWPdgei.png)
 
 ![Variable Types](https://i.imgur.com/X08VBnb.png)
-## Features
-
+## Main Features
+* GameObject Tags
 * Global Scriptable Object Variables
 * Global Scriptable Object Events
 * Instanced Scriptable Object Variables
 * Instanced Scriptable Object Events
-
-* Clamped Scriptable Object References
-* Expression based Scriptable Object References
-* Added/Subtracted/Multiplied/Divided Scriptable Object References
 * Code Generator
+* More
 
 ## Installation
 
