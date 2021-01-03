@@ -2,6 +2,8 @@
 Based on the Unite Austin 2017 talk by Ryan Hipple.
 https://www.youtube.com/watch?v=raQ3iHhE_Kk
 
+This is more of a research project for personal use. For a more feature complete asset check out https://github.com/AdamRamberg/unity-atoms 
+
 # WIP
 - Example code.
 
