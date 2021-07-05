@@ -66,7 +66,7 @@ namespace Fasteraune.SO.Instances.Events.Editor
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
-            var result = EditorGUI.Popup(buttonRect, referenceType.enumValueIndex, popupOptions, popupStyle);
+            var result = EditorGUI.Popup(buttonRect, referenceType.enumValueIndex - 1, popupOptions, popupStyle);
             referenceType.enumValueIndex = result + 1; //Events can't be constant
 
             switch (referenceTypeEnum)
